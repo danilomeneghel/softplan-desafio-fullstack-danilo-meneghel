@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <h2>Pareceres</h2>
+	<div class="add-button">
+		<button sec:authorize="hasAuthority('ADMIN')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#parecer">
+			<i class="fa fa-plus"></i> Parecer
+		</button>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="search">
+                    <div class="inner-addon right-addon">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Pesquisar" ng-model="pesquisar" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Comentário</th>
+                        <th>Data</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="parecer in filterData = (ctrl.getAllParecer()| filter: pesquisar) | limitTo: 5:5*(page-1)">
+                        <td>{{parecer.id}}</td>
+                        <td>{{parecer.comentario}}</td>
+                        <td>{{parecer.data | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td class="col-actions">
+                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="pagination-left">
+                    Total de Registros: {{filterData.length}}
+                </div>
+                <div class="pagination-right">
+                    <uib-pagination class="pagination-sm pagination" total-items="filterData.length" ng-model="page"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=5></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="parecer" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        	<div class="modal-header">
+                <h3 class="modal-title">{{!ctrl.parecer.id ? 'Adicionar' : 'Editar'}} Parecer</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="panel panel-default">
+		        <div class="panel-body">
+		            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+		            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+		            <form ng-submit="ctrl.submitParecer()" name="parecerForm" class="form-horizontal">
+		                <input type="hidden" ng-model="ctrl.parecer.id" />
+		                <div class="form-panel">
+		                    <div class="form-group">
+		                        <input type="text" ng-model="ctrl.parecer.comentario" name="comentario" class="form-control" placeholder="Título" />
+		                    </div>
+		                    <div class="form-group">
+		                        <select ng-model="ctrl.parecer.status" class="form-control">
+							    	<option value="Ativo">Ativo</option>
+							    	<option value="Inativo">Inativo</option>
+		  	 					</select>
+		                    </div>
+		                </div>
+		                <div class="row">
+		                    <div class="form-actions float-left">
+		                        <button type="submit" class="btn btn-success" ng-disabled="parecerForm.$invalid || parecerForm.$pristine">
+		                            <i class="fa fa-hdd-o"></i> {{!ctrl.parecer.id ? 'Adicionar' : 'Editar'}}
+		                        </button>
+		                        <button type="button" ng-click="ctrl.reset()" class="btn btn-default" ng-disabled="parecerForm.$pristine">
+		                            <i class="fa fa-eraser"></i> Limpar
+		                        </button>
+		                    </div>
+		                </div>
+		            </form>
+		        </div>	
+	        </div>
+    	</div>
+    </div>
+</div>

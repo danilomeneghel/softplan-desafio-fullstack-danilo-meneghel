@@ -1,0 +1,116 @@
+<div class="container-fluid">
+    <h2>Usuários</h2>
+	<div class="add-button">
+		<button type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#user">
+			<i class="fa fa-plus"></i> Usuário
+		</button>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="search">
+                    <div class="inner-addon right-addon">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Pesquisar" ng-model="pesquisar" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Usuário</th>
+                        <th>Função</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in filterData = (ctrl.getAllUsers()| filter: pesquisar) | limitTo: 5:5*(page-1)">
+                        <td>{{user.id}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.role}}</td>
+                        <td>{{user.status}}</td>
+                        <td class="col-actions">
+                            <a ng-click="ctrl.editUser(user.id)" class="btn btn-primary show-btn" data-toggle="modal" data-target="#user"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeUser(user.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="pagination-left">
+                    Total de Registros: {{filterData.length}}
+                </div>
+                <div class="pagination-right">
+                    <uib-pagination class="pagination-sm pagination" total-items="filterData.length" ng-model="page"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=5></uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="user" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        	<div class="modal-header">
+                <h3 class="modal-title">{{!ctrl.user.id ? 'Adicionar' : 'Editar'}} Usuário</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="panel panel-default">
+		        <div class="panel-body">
+		            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+		            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+		            <form ng-submit="ctrl.submitUser()" name="userForm" class="form-horizontal">
+		                <input type="hidden" ng-model="ctrl.user.id" />
+		                <div class="form-panel">
+		                    <div class="form-group">
+		                        <input type="text" ng-model="ctrl.user.name" name="name" class="form-control" placeholder="Nome" />
+		                    </div>
+		                    <div class="form-group">
+		                        <input type="text" ng-model="ctrl.user.email" name="email" class="form-control" placeholder="E-mail" />
+		                    </div>
+		                    <div class="form-group">
+		                        <input type="text" ng-model="ctrl.user.username" name="username" class="form-control" placeholder="Usuário" />
+		                    </div>
+		                    <div class="form-group">
+		                        <input type="text" ng-model="ctrl.user.password" name="password" class="form-control" placeholder="Senha" />
+		                    </div>
+		                    <div class="form-group">
+		                        <select ng-model="ctrl.user.role" name="role" id="role" class="form-control">
+		                            <option selected value="ADMIN">Administrador</option>
+		                            <option value="USER">Usuário</option>
+		                            <option value="ASSOC">Associado</option>
+		                        </select>
+		                    </div>
+		                    <div class="form-group">
+		                        <select ng-model="ctrl.user.status" name="status" id="status" class="form-control">
+		                            <option selected value="ATIVO">Ativo</option>
+		                            <option value="INATIVO">Inativo</option>
+		                        </select>
+		                    </div>
+		                </div>
+		                <div class="row">
+		                    <div class="form-actions float-left">
+		                        <button type="submit" class="btn btn-success" ng-disabled="userForm.$invalid || userForm.$pristine">
+		                            <i class="fa fa-hdd-o"></i> {{!ctrl.user.id ? 'Adicionar' : 'Editar'}}
+		                        </button>
+		                        <button type="button" ng-click="ctrl.reset()" class="btn btn-default" ng-disabled="userForm.$pristine">
+		                            <i class="fa fa-eraser"></i> Limpar
+		                        </button>
+		                    </div>
+		                </div>
+		            </form>
+		        </div>	
+    		</div>
+   		</div>
+ 	</div>
+</div>
+    
