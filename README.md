@@ -31,10 +31,7 @@ Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring
 - Jquery
 - Bootstrap
 - AngularJS
-<<<<<<< HEAD
 - H2
-=======
->>>>>>> 71ef8a404ea28a4894e2f19faec83e51be0d1463
 
 ## Instalação
 
