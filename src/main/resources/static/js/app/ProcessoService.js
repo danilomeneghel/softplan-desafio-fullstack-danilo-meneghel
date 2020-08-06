@@ -5,7 +5,9 @@ angular.module('processoApp').factory('ProcessoService', [
     function ($localStorage, $http, $q, urls) {
         var factory = {
             loadAllProcessos: loadAllProcessos,
+            loadAllUsers: loadAllUsers,
             getAllProcessos: getAllProcessos,
+            getAllUsers: getAllUsers,
             getProcesso: getProcesso,
             processoParecer: processoParecer,
             resultadoParecer: resultadoParecer,
@@ -32,6 +34,26 @@ angular.module('processoApp').factory('ProcessoService', [
             return deferred.promise;
         }
         
+        function loadAllUsers() {
+            var deferred = $q.defer();
+            $http.get(urls.USERS_SERVICE_API).then(
+                function (response) {
+                    console.log('Usuários carregado com sucesso');
+                    $localStorage.users = response.data;
+                    deferred.resolve(response);
+                },
+                function (errResponse) {
+                    console.error('Erro ao carregar users');
+                    deferred.reject(errResponse);
+                }
+            );
+            return deferred.promise;
+        }
+
+        function getAllUsers() {
+            return $localStorage.users;
+        }
+
         function processoParecer() {
             return $localStorage.processo;
         }
@@ -43,7 +65,7 @@ angular.module('processoApp').factory('ProcessoService', [
         function getAllProcessos() {
             return $localStorage.processos;
         }
-
+        
         function getProcesso(id) {
             $localStorage.processo = "";
             $localStorage.parecer = "";

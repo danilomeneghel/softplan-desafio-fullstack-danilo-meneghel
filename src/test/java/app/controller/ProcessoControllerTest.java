@@ -33,10 +33,9 @@ public class ProcessoControllerTest extends ApplicationTests {
 	@Test
 	public void testPOSTProcesso() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
-				.param("iduser", "1")
 				.param("titulo", "Processo Teste 2")
 				.param("descricao", "Descrição Teste.")
-				.param("status", "Ativo")
+				.param("iduser", "1")
 				.param("createdAt", "2020-08-04 23:25:10"));
 	}
 	
@@ -55,10 +54,9 @@ public class ProcessoControllerTest extends ApplicationTests {
 	@Test
 	public void testPUTProcesso() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
-					.param("iduser", "1")
 					.param("titulo", "Processo Teste 3")
 					.param("descricao", "Descrição Teste.")
-					.param("status", "Inativo")
+					.param("iduser", "1")
 					.param("createdAt", "2020-08-04 23:25:10"));
 		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/" + 1));
 	}

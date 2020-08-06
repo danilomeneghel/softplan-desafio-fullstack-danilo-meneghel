@@ -43,7 +43,7 @@ public class CadastroController {
 	                    if (currentUser == null) { // Verifica se já existe o usuário
 	                        // Criptografa a senha
 	                        userService.encryptPassword(user);
-	                        user.setRole("ASSOC");
+	                        user.setRole("TRIAD");
 	                        user.setStatus("ATIVO");
 	                        userService.saveUser(user);
 	                        redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");

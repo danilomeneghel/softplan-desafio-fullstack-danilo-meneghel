@@ -28,8 +28,6 @@ public class Processo {
 
 	private String descricao;
 	
-	private String status;
-	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;

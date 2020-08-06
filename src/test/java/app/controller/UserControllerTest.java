@@ -37,7 +37,7 @@ public class UserControllerTest extends ApplicationTests {
 				.param("email", "bruna@bruna.com")
 				.param("username", "bruna")
 				.param("password", "a123456")
-				.param("role", "FINALIZADOR")
+				.param("role", "FINAL")
 				.param("status", "ATIVO")
 				.param("createdAt", "2020-08-04 01:55:54"));
 	}
@@ -55,19 +55,13 @@ public class UserControllerTest extends ApplicationTests {
 	}
 	
 	@Test
-	public void testGETUserCPF() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users/" + "30189981032"))
-		.andExpect(MockMvcResultMatchers.status().isOk());
-	}
-	
-	@Test
 	public void testPUTUser() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
 					.param("name", "Cristiana")
 					.param("email", "cristiana@cristiana.com")
 					.param("username", "cristiana")
 					.param("password", "c123456")
-					.param("role", "USER")
+					.param("role", "TRIAD")
 					.param("status", "INATIVO")
 					.param("createdAt", "2020-08-05 03:55:54"));
 		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/" + 1));
@@ -77,5 +71,5 @@ public class UserControllerTest extends ApplicationTests {
 	public void testDELETEUser() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/" + 1));
 	}
-		
+	
 }

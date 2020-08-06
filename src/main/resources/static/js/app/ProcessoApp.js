@@ -5,6 +5,7 @@ app.constant('urls', {
     BASE: url_base,
     PROCESSO_SERVICE_API: url_base + '/api/processo',
     PARECER_SERVICE_API: url_base + '/api/parecer',
+    USERS_SERVICE_API: url_base + '/api/user',
     USER_SERVICE_API: url_base + '/api/user-logged'
 });
 
@@ -20,6 +21,7 @@ app.config([
                 processos: function ($q, ProcessoService) {
                     var deferred = $q.defer();
                     ProcessoService.loadAllProcessos().then(deferred.resolve, deferred.resolve);
+                    ProcessoService.loadAllUsers().then(deferred.resolve, deferred.resolve);
                     return deferred.promise;
                 }
             }

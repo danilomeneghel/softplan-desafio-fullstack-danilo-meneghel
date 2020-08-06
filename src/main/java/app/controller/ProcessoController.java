@@ -39,7 +39,7 @@ public class ProcessoController {
 	@Autowired
 	UserServiceImpl userService;
 
-	@ApiOperation(value = "Lista todas as Processos")
+	@ApiOperation(value = "Lista todos os Processos")
 	@RequestMapping(value = "/processo", method = RequestMethod.GET)
 	public ResponseEntity<List<Processo>> listAllProcessos(Principal principal) {
 		String username = (principal == null) ? "user" : principal.getName();
@@ -49,7 +49,7 @@ public class ProcessoController {
 		if (user.getRole().equals("ADMIN")) {
 			processos = processoService.findAllByOrderByTituloAsc();
 		} else {
-			processos = processoService.findAllByStatusOrderByTituloAsc("Ativo");
+			processos = processoService.findAllByUserId(user.getId());
 		}
 		
 		if (processos.isEmpty()) {
@@ -59,7 +59,7 @@ public class ProcessoController {
 		return new ResponseEntity<List<Processo>>(processos, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Pega uma Processo")
+	@ApiOperation(value = "Pega um Processo")
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getProcesso(@PathVariable("id") Long id) {
 		Processo processo = processoService.findProcessoById(id);
@@ -71,7 +71,7 @@ public class ProcessoController {
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Cria a Processo")
+	@ApiOperation(value = "Cria o Processo")
 	@RequestMapping(value = "/processo", method = RequestMethod.POST)
 	public ResponseEntity<?> createProcesso(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
 		if (processoService.isProcessoExist(processo)) {
@@ -93,7 +93,7 @@ public class ProcessoController {
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value = "Atualiza a Processo")
+	@ApiOperation(value = "Atualiza o Processo")
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateProcesso(@PathVariable("id") Long id, @RequestBody Processo processo) {
 		if (processoService.findProcessoById(id) == null) {
@@ -107,7 +107,7 @@ public class ProcessoController {
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Exclui a Processo")
+	@ApiOperation(value = "Exclui o Processo")
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteProcesso(@PathVariable("id") Long id) {
 		Processo processo = processoService.findProcessoById(id);
@@ -121,7 +121,7 @@ public class ProcessoController {
 		return new ResponseEntity<Processo>(HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "Exclui todas as Processos")
+	@ApiOperation(value = "Exclui todos os Processos")
 	@RequestMapping(value = "/processo", method = RequestMethod.DELETE)
 	public ResponseEntity<Processo> deleteAllProcessos() {
 		processoService.deleteAllProcessos();

@@ -39,7 +39,7 @@ public class ParecerController {
 	@Autowired
 	UserServiceImpl userService;
 
-	@ApiOperation(value = "Lista todas os Pareceres")
+	@ApiOperation(value = "Lista todos os Pareceres")
 	@RequestMapping(value = "/parecer", method = RequestMethod.GET)
 	public ResponseEntity<List<Parecer>> listAllPareceres(Principal principal) {
 		String username = (principal == null) ? "user" : principal.getName();

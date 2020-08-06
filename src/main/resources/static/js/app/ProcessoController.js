@@ -9,6 +9,7 @@ angular.module('processoApp').controller('ProcessoController', [
 
         self.submitProcesso = submitProcesso;
         self.getAllProcessos = getAllProcessos;
+        self.getAllUsers = getAllUsers;
         self.createProcesso = createProcesso;
         self.updateProcesso = updateProcesso;
         self.removeProcesso = removeProcesso;
@@ -84,6 +85,10 @@ angular.module('processoApp').controller('ProcessoController', [
 
         function getAllProcessos() {
             return ProcessoService.getAllProcessos();
+        }
+        
+        function getAllUsers() {
+            return ProcessoService.getAllUsers();
         }
 
         function editProcesso(id) {
