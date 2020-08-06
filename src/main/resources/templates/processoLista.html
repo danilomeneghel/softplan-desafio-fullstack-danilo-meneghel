@@ -28,7 +28,7 @@
                     <tr ng-repeat="processo in filterData = (ctrl.getAllProcesso()| filter: pesquisar) | limitTo: 5:5*(page-1)">
                         <td>{{processo.id}}</td>
                         <td>{{processo.titulo}}</td>
-                        <td>{{processo.data | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{processo.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeProcesso(processo.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>

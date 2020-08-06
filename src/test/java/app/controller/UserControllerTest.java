@@ -19,9 +19,6 @@ public class UserControllerTest extends ApplicationTests {
 
 	private MockMvc mockMvc;
 	
-	//Cria um novo objeto
-	private User user = new User("Paulo", "paulo@zzz.com", "jose", "j123456", "TRIADOR", "ATIVO", new Date(0));
-	
 	@Autowired
 	private UserController userController;
 
@@ -42,7 +39,7 @@ public class UserControllerTest extends ApplicationTests {
 				.param("password", "a123456")
 				.param("role", "FINALIZADOR")
 				.param("status", "ATIVO")
-				.param("data", "2020-08-05 01:55:54"));
+				.param("createdAt", "2020-08-04 01:55:54"));
 	}
 	
 	@Test
@@ -65,22 +62,20 @@ public class UserControllerTest extends ApplicationTests {
 	
 	@Test
 	public void testPUTUser() throws Exception {
-		//Edita alguns valores
-		user.setName("Ricardo Silva");
-		user.setPassword("p654321");
-		user.setRole("USER");
-		user.setStatus("INATIVO");
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/" + user.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
+					.param("name", "Cristiana")
+					.param("email", "cristiana@cristiana.com")
+					.param("username", "cristiana")
+					.param("password", "c123456")
+					.param("role", "USER")
+					.param("status", "INATIVO")
+					.param("createdAt", "2020-08-05 03:55:54"));
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/" + 1));
 	}
 	
 	@Test
 	public void testDELETEUser() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/" + user.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/" + 1));
 	}
-	
-	@Test
-	public void testIsUserExist() throws Exception {
-		userService.isUserExist(user);
-	}
-	
+		
 }

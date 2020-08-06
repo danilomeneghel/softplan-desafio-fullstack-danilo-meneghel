@@ -1,1 +1,1 @@
-INSERT INTO user (name, email, username, password, role, status) VALUES ('Administrador', 'admin@admin.com', 'admin', '$2a$12$ugS3CQsngLNVwIWvcCaXO.AeIXJ6tUF9xeslg6wzuHy2ekpr8D0zG', 'ADMIN', 'ATIVO');
+INSERT INTO "user" (name, email, username, password, role, status, created_at) VALUES ('Administrador', 'admin@admin.com', 'admin', '$2a$12$ugS3CQsngLNVwIWvcCaXO.AeIXJ6tUF9xeslg6wzuHy2ekpr8D0zG', 'ADMIN', 'ATIVO', '2020-08-05 22:30:54');

@@ -19,9 +19,6 @@ public class ParecerControllerTest extends ApplicationTests {
 
 	private MockMvc mockMvc;
 	
-	//Cria um novo objeto
-	private Parecer parecer = new Parecer(Long.valueOf("1"), Long.valueOf("1"), "Parecer Teste", "Ativo", new Date(0));
-	
 	@Autowired
 	private ParecerController parecerController;
 
@@ -40,7 +37,7 @@ public class ParecerControllerTest extends ApplicationTests {
 				.param("iduser", "1")
 				.param("comentario", "Parecer Teste 2")
 				.param("status", "Ativo")
-				.param("data", "2019-12-16 06:25:10"));
+				.param("createdAt", "2020-05-04 05:25:10"));
 	}
 	
 	@Test
@@ -57,20 +54,18 @@ public class ParecerControllerTest extends ApplicationTests {
 	
 	@Test
 	public void testPUTParecer() throws Exception {
-		//Edita alguns valores
-		parecer.setComentario("Parecer de Teste");
-		parecer.setStatus("Inativo");
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/parecer/" + parecer.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/parecer")
+					.param("idprocesso", "1")
+					.param("iduser", "1")
+					.param("comentario", "Parecer Teste 3")
+					.param("status", "Inativo")
+					.param("createdAt", "2020-08-05 06:25:10"));
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/parecer/" + 1));
 	}
 	
 	@Test
 	public void testDELETEParecer() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/parecer/" + parecer.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/parecer/" + 1));
 	}
-	
-	@Test
-	public void testIsParecerExist() throws Exception {
-		parecerService.isParecerExist(parecer);
-	}
-	
+		
 }

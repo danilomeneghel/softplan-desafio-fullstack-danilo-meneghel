@@ -84,12 +84,9 @@ public class ProcessoController {
 		//Pega os dados do usuário logado
 		User user = userService.userLogged();
 		
-		//Seta o Id do usuário
-		processo.setIduser(user.getId());
-		
-		//Seta a data da criação
-		processo.setData(new Date());
-		
+		//Seta o Usuário
+		processo.setUser(user);
+			
 		processoService.saveProcesso(processo);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/api/processo/{id}").buildAndExpand(processo.getId()).toUri());

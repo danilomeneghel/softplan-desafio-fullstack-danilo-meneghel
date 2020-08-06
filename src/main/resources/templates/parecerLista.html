@@ -28,7 +28,7 @@
                     <tr ng-repeat="parecer in filterData = (ctrl.getAllParecer()| filter: pesquisar) | limitTo: 5:5*(page-1)">
                         <td>{{parecer.id}}</td>
                         <td>{{parecer.comentario}}</td>
-                        <td>{{parecer.data | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{parecer.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>

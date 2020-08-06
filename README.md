@@ -13,12 +13,13 @@ Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring
 - Login
 - Responsive
 - JUnit
+- Mockito
 
 ## Requisitos
 
 - Java JDK 1.8
 - Apache Maven >= 3.6.3
-- H2
+- PostgreSQL >= 12
 
 ## Tecnologias
 
@@ -31,7 +32,7 @@ Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring
 - Jquery
 - Bootstrap
 - AngularJS
-- H2
+- PostgreSQL
 
 ## Instalação
 
@@ -40,6 +41,10 @@ $ git clone https://github.com/danilomeneghel/softplan-desafio-fullstack-danilo-
 
 $ cd softplan-desafio-fullstack-danilo-meneghel
 ```
+
+Crie o banco de dados com o nome sistema-processos em seu PostgreSQL.
+
+Depois abra o arquivo "src/main/resources/application.properties" e coloque os dados de acordo com a conexão do seu banco de dados.
 
 Para carregar o projeto, digite no terminal:
 

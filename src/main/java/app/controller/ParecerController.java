@@ -84,12 +84,12 @@ public class ParecerController {
 		//Pega os dados do usuário logado
 		User user = userService.userLogged();
 		
-		//Seta o Id do usuário
-		parecer.setIduser(user.getId());
-		
-		//Seta a data da criação
-		parecer.setData(new Date());
-		
+		//Seta o Usuário
+		parecer.setUser(user);
+
+		//Seta o Processo
+		//parecer.setProcesso(processo);
+				
 		parecerService.saveParecer(parecer);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/api/parecer/{id}").buildAndExpand(parecer.getId()).toUri());

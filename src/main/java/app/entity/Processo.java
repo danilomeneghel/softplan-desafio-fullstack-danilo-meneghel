@@ -3,6 +3,8 @@ package app.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,26 +24,21 @@ public class Processo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Long iduser;
-
 	private String titulo;
 
 	private String descricao;
 	
 	private String status;
 	
-	private Date data = new Date(0);
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	public Processo() {
-	}
-
-	public Processo(Long iduser, String titulo, String descricao, String status, Date data) {
-		super();
-		this.iduser = iduser;
-		this.titulo = titulo;
-		this.descricao = descricao;
-		this.status = status;
-		this.data = data;
 	}
 
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.PERSIST)
@@ -49,5 +46,6 @@ public class Processo {
     private Set<Parecer> parecer = new HashSet<>();
 
 	@ManyToOne
+	@JoinColumn(name = "iduser", referencedColumnName="id")
     private User user;
 }

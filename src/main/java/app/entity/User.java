@@ -3,15 +3,16 @@ package app.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,7 +45,9 @@ public class User {
 
 	private String status;
 
-	private Date data = new Date(0);
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
 
 	public User() {
 	}
@@ -54,19 +57,6 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.role = role;
-	}
-
-	public User(@Size(min = 3, max = 100) String name, @Size(min = 3, max = 100) String email, 
-			@Size(min = 3, max = 50) String username, @Size(min = 4, max = 80) String password, String role,
-			String status, Date data) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.status = status;
-		this.data = data;
 	}
 
 	@OneToMany(mappedBy = "user")

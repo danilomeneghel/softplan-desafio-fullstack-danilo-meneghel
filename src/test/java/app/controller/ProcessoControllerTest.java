@@ -19,9 +19,6 @@ public class ProcessoControllerTest extends ApplicationTests {
 
 	private MockMvc mockMvc;
 	
-	//Cria um novo objeto
-	private Processo processo = new Processo(Long.valueOf("1"), "Processo Teste", "Texto Teste.", "Ativo", new Date(0));
-	
 	@Autowired
 	private ProcessoController processoController;
 
@@ -40,7 +37,7 @@ public class ProcessoControllerTest extends ApplicationTests {
 				.param("titulo", "Processo Teste 2")
 				.param("descricao", "Descrição Teste.")
 				.param("status", "Ativo")
-				.param("data", "2020-08-04 23:25:10"));
+				.param("createdAt", "2020-08-04 23:25:10"));
 	}
 	
 	@Test
@@ -57,20 +54,18 @@ public class ProcessoControllerTest extends ApplicationTests {
 	
 	@Test
 	public void testPUTProcesso() throws Exception {
-		//Edita alguns valores
-		processo.setTitulo("Processo de Teste");
-		processo.setStatus("Inativo");
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/" + processo.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
+					.param("iduser", "1")
+					.param("titulo", "Processo Teste 3")
+					.param("descricao", "Descrição Teste.")
+					.param("status", "Inativo")
+					.param("createdAt", "2020-08-04 23:25:10"));
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/" + 1));
 	}
 	
 	@Test
 	public void testDELETEProcesso() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/processo/" + processo.getId()));
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/processo/" + 1));
 	}
-	
-	@Test
-	public void testIsProcessoExist() throws Exception {
-		processoService.isProcessoExist(processo);
-	}
-	
+		
 }
