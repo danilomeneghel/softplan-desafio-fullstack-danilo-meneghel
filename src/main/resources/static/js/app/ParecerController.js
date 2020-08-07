@@ -17,8 +17,6 @@ angular.module('parecerApp').controller('ParecerController', [
         self.resultadoParecer = resultadoParecer;
         self.reset = reset;
         self.resetParecer = resetParecer;
-		self.divCollapse = divCollapse;
-		self.class = 'fa fa-plus';
 		
         self.successMessage = '';
         self.errorMessage = '';
@@ -53,9 +51,17 @@ angular.module('parecerApp').controller('ParecerController', [
         }
 
         function updateParecer(parecer, id) {
-            ParecerService.updateParecer(parecer, id).then(
+            var update = {id:null, comentario:null, status:null, createdAt:null, processo:{titulo:null}, user:{name:null}};
+            update.id = parecer.id;
+            update.comentario = parecer.comentario;
+            update.status = parecer.status;
+            update.createdAt = parecer.createdAt;
+            update.processo.titulo = parecer.processo.titulo;
+            update.user.name = parecer.user.name;
+
+            ParecerService.updateParecer(update, id).then(
                 function (response) {
-                    console.log('Parecer atualizado com sucesso');
+                    console.log('Parecer atualizado com sucesso', update);
                     self.successMessage = 'Parecer atualizado com sucesso';
                     self.errorMessage = '';
                     self.done = true;
@@ -89,7 +95,6 @@ angular.module('parecerApp').controller('ParecerController', [
         function editParecer(id) {
             self.successMessage = '';
             self.errorMessage = '';
-			//$(".collapse").collapse('show');
             ParecerService.getParecer(id).then(
                 function (parecer) {
                     self.parecer = parecer;
@@ -130,13 +135,4 @@ angular.module('parecerApp').controller('ParecerController', [
             $scope.parecerForm.$setPristine();
         }
 		
-		function divCollapse() {
-			$(".collapse").collapse('toggle');
-		}
-		
-		$(".collapse").on('show.bs.collapse', function () {
-			self.class = 'fa fa-minus';
-		}).on('hide.bs.collapse', function () {
-			self.class = 'fa fa-plus';
-		});
     }]);

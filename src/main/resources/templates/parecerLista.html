@@ -65,6 +65,8 @@
 		            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
 		            <form ng-submit="ctrl.submitParecer()" name="parecerForm" class="form-horizontal">
 		                <input type="hidden" ng-model="ctrl.parecer.id" />
+		                <input type="hidden" ng-model="ctrl.parecer.processo.id" />
+		                <input type="hidden" ng-model="ctrl.parecer.user.id" />
 		                <div class="form-panel">
 		                    <div class="form-group">
 		                        <textarea ng-model="ctrl.parecer.comentario" name="comentario" class="form-control" placeholder="Comentário" rows="5"></textarea>

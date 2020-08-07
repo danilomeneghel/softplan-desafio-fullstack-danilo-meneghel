@@ -18,8 +18,6 @@ angular.module('processoApp').controller('ProcessoController', [
         self.resultadoParecer = resultadoParecer;
         self.reset = reset;
         self.resetParecer = resetParecer;
-		self.divCollapse = divCollapse;
-		self.class = 'fa fa-plus';
 		
         self.successMessage = '';
         self.errorMessage = '';
@@ -105,7 +103,6 @@ angular.module('processoApp').controller('ProcessoController', [
         function editProcesso(id) {
             self.successMessage = '';
             self.errorMessage = '';
-			//$(".collapse").collapse('show');
             ProcessoService.getProcesso(id).then(
                 function (processo) {
                     self.processo = processo;
@@ -146,13 +143,4 @@ angular.module('processoApp').controller('ProcessoController', [
             $scope.parecerForm.$setPristine();
         }
 		
-		function divCollapse() {
-			$(".collapse").collapse('toggle');
-		}
-		
-		$(".collapse").on('show.bs.collapse', function () {
-			self.class = 'fa fa-minus';
-		}).on('hide.bs.collapse', function () {
-			self.class = 'fa fa-plus';
-		});
     }]);

@@ -20,7 +20,6 @@ angular.module('parecerApp').factory('ParecerService', [
             var deferred = $q.defer();
             $http.get(urls.PARECER_SERVICE_API).then(
                 function (response) {
-                    console.log('Pareceres carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
                     deferred.resolve(response);
                 },
