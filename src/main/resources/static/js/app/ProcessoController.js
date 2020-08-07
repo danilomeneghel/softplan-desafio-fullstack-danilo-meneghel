@@ -65,7 +65,7 @@ angular.module('processoApp').controller('ProcessoController', [
         function updateProcesso(processo, id) {
             ProcessoService.updateProcesso(processo, id).then(
                 function (response) {
-                    console.log('Processo atualizado com sucesso');
+                    console.log('Processo atualizado com sucesso', response);
                     self.successMessage = 'Processo atualizado com sucesso';
                     self.errorMessage = '';
                     self.done = true;

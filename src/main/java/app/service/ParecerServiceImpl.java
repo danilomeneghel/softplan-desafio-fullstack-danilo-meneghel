@@ -41,7 +41,11 @@ public class ParecerServiceImpl {
     }
 
     public void updateParecer(Parecer parecer) {
-        repository.save(parecer);
+        Parecer update = findParecerById(parecer.getId());
+        update.setComentario(parecer.getComentario());
+        update.setStatus(parecer.getStatus());
+
+        repository.save(update);
     }
 
     public void deleteParecerById(Long id) {

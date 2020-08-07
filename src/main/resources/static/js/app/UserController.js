@@ -54,7 +54,7 @@ angular.module('userApp').controller('UserController', [
         function updateUser(user, id) {
             UserService.updateUser(user, id).then(
                 function (response) {
-                    console.log('Usuário atualizado com sucesso!');
+                    console.log('Usuário atualizado com sucesso!', response);
                     self.successMessage = 'Usuário atualizado com sucesso!';
                     self.errorMessage = '';
                     self.done = true;
