@@ -50,12 +50,8 @@ angular.module('parecerApp').factory('ParecerService', [
             var deferred = $q.defer();
             $http.get(urls.PARECER_SERVICE_API + "/" + id).then(
                 function (responseParecer) {
-                	$http.get(urls.USER_SERVICE_API).then(
-            			function (responseUser) {
-                			console.log('Parecer carregado com id :' + id);
-                			deferred.resolve(responseParecer.data);
-            			}
-                    );
+                    console.log('Parecer carregado com id :' + id);
+                    deferred.resolve(responseParecer.data);
                 },
                 function (errResponse) {
                     console.error('Erro ao carregar a parecer com o id :' + id);

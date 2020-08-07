@@ -5,8 +5,7 @@ app.constant('urls', {
     BASE: url_base,
     PROCESSO_SERVICE_API: url_base + '/api/processo',
     PARECER_SERVICE_API: url_base + '/api/parecer',
-    USERS_SERVICE_API: url_base + '/api/user',
-    USER_SERVICE_API: url_base + '/api/user-logged'
+    FINALIZADOR_SERVICE_API: url_base + '/api/finalizador'
 });
 
 app.config([

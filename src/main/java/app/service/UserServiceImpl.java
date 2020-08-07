@@ -31,6 +31,10 @@ public class UserServiceImpl implements UserDetailsService {
 	public List<User> findAllByOrderByNameAsc() {
 		return repository.findAllByOrderByNameAsc();
 	}
+	
+	public List<User> findAllByRoleOrderByUsernameAsc(String role) {
+		return repository.findAllByRoleOrderByUsernameAsc(role);
+	}
 
 	public User findByName(String name) {
 		return repository.findByName(name);

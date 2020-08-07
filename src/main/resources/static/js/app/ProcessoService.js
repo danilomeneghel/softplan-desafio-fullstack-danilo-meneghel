@@ -36,7 +36,7 @@ angular.module('processoApp').factory('ProcessoService', [
         
         function loadAllUsers() {
             var deferred = $q.defer();
-            $http.get(urls.USERS_SERVICE_API).then(
+            $http.get(urls.FINALIZADOR_SERVICE_API).then(
                 function (response) {
                     console.log('Usuários carregado com sucesso', response.data);
                     $localStorage.users = response.data;
@@ -72,12 +72,8 @@ angular.module('processoApp').factory('ProcessoService', [
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
                 function (responseProcesso) {
-                	$http.get(urls.USER_SERVICE_API).then(
-            			function (responseUser) {
-                			console.log('Processo carregado com id :' + id);
-                			deferred.resolve(responseProcesso.data);
-            			}
-                    );
+                    console.log('Processo carregado com id :' + id);
+                    deferred.resolve(responseProcesso.data);
                 },
                 function (errResponse) {
                     console.error('Erro ao carregar a processo com o id :' + id);

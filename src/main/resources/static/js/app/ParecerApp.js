@@ -4,8 +4,7 @@ var url_base = window.location.origin;
 app.constant('urls', {
     BASE: url_base,
     PROCESSO_SERVICE_API: url_base + '/api/processo',
-    PARECER_SERVICE_API: url_base + '/api/parecer',
-    USER_SERVICE_API: url_base + '/api/user-logged'
+    PARECER_SERVICE_API: url_base + '/api/parecer'
 });
 
 app.config([

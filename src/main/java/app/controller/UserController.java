@@ -47,6 +47,21 @@ public class UserController {
 		
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "Lista todos os Finalizadores")
+	@RequestMapping(value = "/finalizador", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> listAllFinalizadores() {
+		List<User> users = userService.findAllByRoleOrderByUsernameAsc("FINAL");
+		if (users.isEmpty()) {
+			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+		}
+		for (User user : users) {
+			//Muda valor da senha para não ser mostrada
+			user.setPassword(null);
+		}
+		
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Pega um Usuário")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
