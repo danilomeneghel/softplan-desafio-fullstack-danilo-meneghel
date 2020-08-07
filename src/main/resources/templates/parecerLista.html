@@ -31,8 +31,8 @@
                         <td>{{parecer.status}}</td>
                         <td>{{parecer.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
-                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
                 </tbody>

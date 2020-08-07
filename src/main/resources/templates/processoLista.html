@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h2>Processos</h2>
 	<div class="add-button">
-		<button sec:authorize="hasAuthority('ADMIN', 'TRIAD')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#processo">
+		<button sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#processo">
 			<i class="fa fa-plus"></i> Processo
 		</button>
     </div>
@@ -32,8 +32,8 @@
                         <td sec:authorize="hasAuthority('ADMIN')">{{processo.criador.name}}</td>
                         <td>{{processo.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAuthority('ADMIN', 'TRIAD')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
-                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeProcesso(processo.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN')" ng-click="ctrl.removeProcesso(processo.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
                 </tbody>

@@ -26,9 +26,9 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav nav-navbar navbar-left">
-                            <li class="menu-item"><a sec:authorize="hasAuthority('ADMIN', 'TRIAD')" th:href="@{/processos}">Processos</a></li>
-                            <li class="menu-item"><a sec:authorize="hasAuthority('ADMIN', 'FINAL')" th:href="@{/pareceres}">Pareceres</a></li>
-                            <li class="menu-item"><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">Usuários</a></li>
+                            <li class="menu-item"><a sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" th:href="@{/processos}">Processos</a></li>
+                            <li class="menu-item"><a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" th:href="@{/pareceres}">Pareceres</a></li>
+                            <li class="menu-item"><a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/users}">Usuários</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->
