@@ -49,7 +49,7 @@ public class ProcessoController {
 		if (user.getRole().equals("ADMIN")) {
 			processos = processoService.findAllByOrderByTituloAsc();
 		} else {
-			processos = processoService.findAllByUserId(user.getId());
+			processos = processoService.findAllByCriador(user.getId());
 		}
 		
 		if (processos.isEmpty()) {
@@ -76,19 +76,18 @@ public class ProcessoController {
 	public ResponseEntity<?> createProcesso(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
 		if (processoService.isProcessoExist(processo)) {
 			logger.error("Não é possível criar. Processo com titulo {} já existe", processo.getTitulo());
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível criar. Processo com titulo " + processo.getTitulo() + " já existe."),
+			return new ResponseEntity<Object>(new CustomErrorType("Não é possível criar. Processo com titulo " + processo.getTitulo() + " já existe."),
 					HttpStatus.CONFLICT);
 		}
 		
-		//Pega os dados do usuário logado
-		User user = userService.userLogged();
-		
-		//Seta o Usuário
-		processo.setUser(user);
-			
+		//Seta o Usuário logado
+		processo.setCriador(userService.userLogged());
+		//Seta os Pareceres
+		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
+
 		processoService.saveProcesso(processo);
-		HttpHeaders headers = new HttpHeaders();
+		
+		HttpHeaders headers = new HttpHeaders();		
 		headers.setLocation(ucBuilder.path("/api/processo/{id}").buildAndExpand(processo.getId()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
@@ -102,6 +101,11 @@ public class ProcessoController {
 					new CustomErrorType("Não é possível atualizar. Processo com id " + id + " não encontrado."),
 					HttpStatus.NOT_FOUND);
 		}
+		
+		//Seta o Usuário logado
+		processo.setCriador(userService.userLogged());
+		//Seta os Pareceres
+		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
 		
 		processoService.updateProcesso(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);

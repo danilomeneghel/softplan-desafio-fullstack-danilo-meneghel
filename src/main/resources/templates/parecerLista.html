@@ -1,10 +1,5 @@
 <div class="container-fluid">
     <h2>Pareceres</h2>
-	<div class="add-button">
-		<button sec:authorize="hasAuthority('ADMIN')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#parecer">
-			<i class="fa fa-plus"></i> Parecer
-		</button>
-    </div>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -19,18 +14,24 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Processo</th>
                         <th>Comentário</th>
+                        <th sec:authorize="hasAuthority('ADMIN')">Finalizador</th>
+                        <th>Status</th>
                         <th>Data</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="parecer in filterData = (ctrl.getAllParecer()| filter: pesquisar) | limitTo: 5:5*(page-1)">
+                    <tr ng-repeat="parecer in filterData = (ctrl.getAllPareceres()| filter: pesquisar) | limitTo: 5:5*(page-1)">
                         <td>{{parecer.id}}</td>
+                        <td>{{parecer.processo.titulo}}</td>
                         <td>{{parecer.comentario}}</td>
+                        <td sec:authorize="hasAuthority('ADMIN')">{{parecer.user.name}}</td>
+                        <td>{{parecer.status}}</td>
                         <td>{{parecer.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
@@ -66,12 +67,12 @@
 		                <input type="hidden" ng-model="ctrl.parecer.id" />
 		                <div class="form-panel">
 		                    <div class="form-group">
-		                        <input type="text" ng-model="ctrl.parecer.comentario" name="comentario" class="form-control" placeholder="Título" />
+		                        <textarea ng-model="ctrl.parecer.comentario" name="comentario" class="form-control" placeholder="Comentário" rows="5"></textarea>
 		                    </div>
 		                    <div class="form-group">
 		                        <select ng-model="ctrl.parecer.status" class="form-control">
-							    	<option value="Ativo">Ativo</option>
-							    	<option value="Inativo">Inativo</option>
+							    	<option value="PENDENTE">Pendente</option>
+							    	<option value="FINALIZADO">Finalizado</option>
 		  	 					</select>
 		                    </div>
 		                </div>

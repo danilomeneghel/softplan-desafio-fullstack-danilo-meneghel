@@ -35,7 +35,7 @@ public class ProcessoControllerTest extends ApplicationTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
 				.param("titulo", "Processo Teste 2")
 				.param("descricao", "Descrição Teste.")
-				.param("iduser", "1")
+				.param("idcriador", "1")
 				.param("createdAt", "2020-08-04 23:25:10"));
 	}
 	
@@ -56,7 +56,7 @@ public class ProcessoControllerTest extends ApplicationTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
 					.param("titulo", "Processo Teste 3")
 					.param("descricao", "Descrição Teste.")
-					.param("iduser", "1")
+					.param("idcriador", "1")
 					.param("createdAt", "2020-08-04 23:25:10"));
 		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/" + 1));
 	}

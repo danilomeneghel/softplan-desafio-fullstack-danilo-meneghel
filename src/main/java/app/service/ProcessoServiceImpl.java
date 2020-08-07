@@ -26,8 +26,8 @@ public class ProcessoServiceImpl {
         return repository.findAllByOrderByTituloAsc();
     }
     
-    public List<Processo> findAllByUserId(Long id) {
-    	return repository.findAllByUserId(id);
+    public List<Processo> findAllByCriador(Long id) {
+    	return repository.findAllByCriador(id);
     }
 
     public Processo findByTitulo(String titulo) {

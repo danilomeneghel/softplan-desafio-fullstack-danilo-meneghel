@@ -36,14 +36,14 @@ public class Processo {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
-	public Processo() {
-	}
+	public Processo() {}
 
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.PERSIST)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Parecer> parecer = new HashSet<>();
-
+    private Set<Parecer> pareceres = new HashSet<>();
+	
 	@ManyToOne
-	@JoinColumn(name = "iduser", referencedColumnName="id")
-    private User user;
+	@JoinColumn(name = "idcriador", referencedColumnName="id")
+	private User criador;
+	
 }

@@ -22,7 +22,7 @@ angular.module('processoApp').factory('ProcessoService', [
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API).then(
                 function (response) {
-                    console.log('Processos carregados com sucesso');
+                    console.log('Processos carregados com sucesso', response.data);
                     $localStorage.processos = response.data;
                     deferred.resolve(response);
                 },
@@ -38,7 +38,7 @@ angular.module('processoApp').factory('ProcessoService', [
             var deferred = $q.defer();
             $http.get(urls.USERS_SERVICE_API).then(
                 function (response) {
-                    console.log('Usuários carregado com sucesso');
+                    console.log('Usuários carregado com sucesso', response.data);
                     $localStorage.users = response.data;
                     deferred.resolve(response);
                 },

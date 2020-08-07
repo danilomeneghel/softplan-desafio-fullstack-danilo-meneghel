@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 import javax.persistence.*;
@@ -49,9 +51,8 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
-	public User() {
-	}
-
+	public User() {}
+	
 	public User(String username, String password, String role) {
 		super();
 		this.username = username;
@@ -59,11 +60,13 @@ public class User {
 		this.role = role;
 	}
 
-	@OneToMany(mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Processo> processo = new HashSet<>();
+	@OneToMany(mappedBy = "criador")
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@JsonIgnore
+    private Set<Processo> processos = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Parecer> parecer = new HashSet<>();
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@JsonIgnore
+    private Set<Parecer> pareceres = new HashSet<>();
 }

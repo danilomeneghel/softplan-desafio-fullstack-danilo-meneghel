@@ -26,7 +26,7 @@ angular.module('parecerApp').controller('ParecerController', [
 
         function submitParecer() {
             if (self.parecer.id === undefined || self.parecer.id === null) {
-                console.log('Criando novo parecer', self.parecer);
+                console.log('Criando novo parecer');
                 createParecer(self.parecer);
             } else {
                 updateParecer(self.parecer, self.parecer.id);

@@ -11,6 +11,6 @@ public interface ProcessoRepository extends CrudRepository<Processo, Long> {
 
     Processo findByTitulo(String titulo);
     List<Processo> findAllByOrderByTituloAsc();
-    List<Processo> findAllByUserId(Long id);
+    List<Processo> findAllByCriador(Long id);
 
 }

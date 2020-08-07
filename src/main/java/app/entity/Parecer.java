@@ -10,9 +10,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity(name="parecer")
 @Getter @Setter
 public class Parecer {
@@ -23,7 +20,7 @@ public class Parecer {
 
 	private String comentario;
 
-	private String status;
+	private String status = "PENDENTE";
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -33,8 +30,7 @@ public class Parecer {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
-	public Parecer() {
-	}
+	public Parecer() {}
 
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idprocesso", referencedColumnName="id")

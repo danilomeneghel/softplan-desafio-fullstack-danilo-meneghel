@@ -25,7 +25,7 @@ angular.module('userApp').controller('UserController', [
 
         function submitUser() {
             if (self.user.id === undefined || self.user.id === null) {
-                console.log('Criando novo usuário', self.user);
+                console.log('Criando novo usuário');
                 createUser(self.user);
             } else {
                 updateUser(self.user, self.user.id);

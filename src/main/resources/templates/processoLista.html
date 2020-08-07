@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <h2>Processos</h2>
 	<div class="add-button">
-		<button sec:authorize="hasAuthority('ADMIN')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#processo">
+		<button sec:authorize="hasAuthority('ADMIN', 'TRIAD')" type="button" ng-click="ctrl.reset()" class="btn btn-success" data-toggle="modal" data-target="#processo">
 			<i class="fa fa-plus"></i> Processo
 		</button>
     </div>
@@ -20,17 +20,19 @@
                     <tr>
                         <th>ID</th>
                         <th>Título</th>
+                        <th sec:authorize="hasAuthority('ADMIN')">Criador</th>
                         <th>Data</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="processo in filterData = (ctrl.getAllProcesso()| filter: pesquisar) | limitTo: 5:5*(page-1)">
+                    <tr ng-repeat="processo in filterData = (ctrl.getAllProcessos()| filter: pesquisar) | limitTo: 5:5*(page-1)">
                         <td>{{processo.id}}</td>
                         <td>{{processo.titulo}}</td>
+                        <td sec:authorize="hasAuthority('ADMIN')">{{processo.criador.name}}</td>
                         <td>{{processo.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAuthority('ADMIN', 'TRIAD')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
                             <a sec:authorize="hasAuthority('ADMIN')" ng-click="ctrl.removeProcesso(processo.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
@@ -72,7 +74,7 @@
 		                        <textarea ng-model="ctrl.processo.descricao" name="descricao" class="form-control" placeholder="Descrição" rows="5"></textarea>
 		                    </div>
 		                    <div class="form-group">
-                                <select multiple  class="form-control" id="user" name="user" formControlName="finalizador">
+                                <select multiple ng-model="ctrl.processo.finalizador" name="finalizador" class="form-control">
                                     <option value="" disabled="disabled">Finalizador</option>
                                     <option ng-repeat="user in ctrl.getAllUsers()" value="{{user.id}}">{{user.name}}</option>
                                 </select>

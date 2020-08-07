@@ -27,7 +27,7 @@ angular.module('processoApp').controller('ProcessoController', [
 
         function submitProcesso() {
             if (self.processo.id === undefined || self.processo.id === null) {
-                console.log('Criando novo processo', self.processo);
+                console.log('Criando novo processo');
                 createProcesso(self.processo);
             } else {
                 updateProcesso(self.processo, self.processo.id);
@@ -36,9 +36,20 @@ angular.module('processoApp').controller('ProcessoController', [
         }
         
         function createProcesso(processo) {
+            processo.pareceres = [];
+            Object.values(processo.finalizador).forEach(id => {
+                var user = {id:null};
+                var parecer = {user:null};
+                user.id = id;
+                parecer.user = user;
+                processo.pareceres.push(parecer);
+            });
+
             ProcessoService.createProcesso(processo).then(
                 function (response) {
                     console.log('Processo criado com sucesso!');
+                    console.log(processo);
+
                     self.successMessage = 'Processo criado com sucesso!';
                     self.errorMessage = '';
                     self.done = true;
