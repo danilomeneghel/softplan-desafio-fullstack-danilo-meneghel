@@ -71,34 +71,21 @@ http://localhost:8080/swagger-ui.html
 
 http://sistema-processos.herokuapp.com/ <br>
 
-- Login
+- Login Administrador
     - Username: admin
     - Password: admin
+
+- Login Triador
+    - Username: bruna
+    - Password: bruna
+
+- Login Finalizador
+    - Username: carlos
+    - Password: carlos
 
 ## Licença
 
 Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.
-
-## Screenshots
-
-![Screenshots](screenshots/screenshot01.png)<br><br>
-![Screenshots](screenshots/screenshot02.png)<br><br>
-![Screenshots](screenshots/screenshot03.png)<br><br>
-![Screenshots](screenshots/screenshot04.png)<br><br>
-![Screenshots](screenshots/screenshot05.png)<br><br>
-![Screenshots](screenshots/screenshot06.png)<br><br>
-![Screenshots](screenshots/screenshot07.png)<br><br>
-![Screenshots](screenshots/screenshot08.png)<br><br>
-
-## Testes
-
-![Screenshots](screenshots/test01.png)<br><br>
-![Screenshots](screenshots/test02.png)<br><br>
-![Screenshots](screenshots/test03.png)<br><br>
-
-## Modelo ER
-
-![Screenshots](screenshots/modelo_er.png)<br><br>
 
 
 Desenvolvido por<br>
