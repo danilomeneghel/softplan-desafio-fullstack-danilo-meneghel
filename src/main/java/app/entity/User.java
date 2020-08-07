@@ -63,13 +63,4 @@ public class User {
 		this.role = role;
 	}
 
-	@OneToMany(mappedBy = "criador")
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JsonIgnore
-    private Set<Processo> processos = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JsonIgnore
-    private Set<Parecer> pareceres = new HashSet<>();
 }

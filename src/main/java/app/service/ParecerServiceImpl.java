@@ -1,6 +1,8 @@
 package app.service;
 
 import app.entity.Parecer;
+import app.entity.User;
+import app.dto.UserDTO;
 import app.repository.ParecerRepository;
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class ParecerServiceImpl {
     	return repository.findAllByOrderByProcessoAsc();
     }
     
-    public List<Parecer> findAllByUser(Long id) {
-    	return repository.findAllByUser(id);
+    public List<Parecer> findAllByUser(UserDTO userDTO) {
+    	return repository.findAllByUser(userDTO);
     }
 
     public Parecer findByComentario(String comentario) {

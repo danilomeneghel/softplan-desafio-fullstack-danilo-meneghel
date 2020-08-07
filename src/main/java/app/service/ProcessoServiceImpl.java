@@ -1,6 +1,8 @@
 package app.service;
 
 import app.entity.Processo;
+import app.entity.User;
+import app.dto.UserDTO;
 import app.repository.ProcessoRepository;
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class ProcessoServiceImpl {
         return repository.findAllByOrderByTituloAsc();
     }
     
-    public List<Processo> findAllByCriador(Long id) {
-    	return repository.findAllByCriador(id);
+    public List<Processo> findAllByCriador(UserDTO userDTO) {
+    	return repository.findAllByCriador(userDTO);
     }
 
     public Processo findByTitulo(String titulo) {

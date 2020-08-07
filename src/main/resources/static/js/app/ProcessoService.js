@@ -96,7 +96,7 @@ angular.module('processoApp').factory('ProcessoService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao criar processo : ' + errResponse.data.errorMessage);
+                    console.error('Erro ao criar processo: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );
@@ -112,7 +112,7 @@ angular.module('processoApp').factory('ProcessoService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao atualizar processo com id :' + id);
+                    console.error('Erro ao atualizar processo: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );

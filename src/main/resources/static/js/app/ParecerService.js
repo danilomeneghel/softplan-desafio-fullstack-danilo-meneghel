@@ -20,6 +20,7 @@ angular.module('parecerApp').factory('ParecerService', [
             var deferred = $q.defer();
             $http.get(urls.PARECER_SERVICE_API).then(
                 function (response) {
+                    console.log('Pareceres carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
                     deferred.resolve(response);
                 },
@@ -73,7 +74,7 @@ angular.module('parecerApp').factory('ParecerService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao criar parecer : ' + errResponse.data.errorMessage);
+                    console.error('Erro ao criar parecer: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );
@@ -89,7 +90,7 @@ angular.module('parecerApp').factory('ParecerService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao atualizar parecer com id :' + id);
+                    console.error('Erro ao atualizar parecer: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );

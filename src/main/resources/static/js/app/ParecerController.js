@@ -51,17 +51,9 @@ angular.module('parecerApp').controller('ParecerController', [
         }
 
         function updateParecer(parecer, id) {
-            var update = {id:null, comentario:null, status:null, createdAt:null, processo:{titulo:null}, user:{name:null}};
-            update.id = parecer.id;
-            update.comentario = parecer.comentario;
-            update.status = parecer.status;
-            update.createdAt = parecer.createdAt;
-            update.processo.titulo = parecer.processo.titulo;
-            update.user.name = parecer.user.name;
-
-            ParecerService.updateParecer(update, id).then(
+            ParecerService.updateParecer(parecer, id).then(
                 function (response) {
-                    console.log('Parecer atualizado com sucesso', update);
+                    console.log('Parecer atualizado com sucesso', parecer);
                     self.successMessage = 'Parecer atualizado com sucesso';
                     self.errorMessage = '';
                     self.done = true;

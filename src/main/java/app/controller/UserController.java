@@ -81,7 +81,7 @@ public class UserController {
 	@ApiOperation(value = "Cria o Usuário")
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-		if (userService.isUserExist(user)) {
+		if (userService.isUserExist(user.getUsername())) {
 			logger.error("Não é possível criar. Usuário com nome {} já existe", user.getUsername());
 			return new ResponseEntity<Object>(
 					new CustomErrorType("Não é possível criar. Usuário com nome " + user.getUsername() + " já existe."),

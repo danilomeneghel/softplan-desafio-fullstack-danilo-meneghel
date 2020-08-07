@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import app.dto.UserDTO;
+
 @Entity(name="processo")
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -52,6 +54,6 @@ public class Processo {
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JoinColumn(name = "idcriador", referencedColumnName="id")
-	private User criador;
+	private UserDTO criador;
 	
 }

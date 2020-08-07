@@ -60,14 +60,13 @@ public class UserServiceImpl implements UserDetailsService {
 		return (List<User>) repository.findAll();
 	}
 
-	public boolean isUserExist(User user) {
-		return findByName(user.getUsername()) != null;
+	public boolean isUserExist(String username) {
+		return findByUsername(username) != null;
 	}
 
 	public User encryptPassword(User user) {
-		String pwd = user.getPassword();
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		String hashPwd = bc.encode(pwd);
+		String hashPwd = bc.encode(user.getPassword());
 		user.setPassword(hashPwd);
 
 		return user;
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User curruser = repository.findByUsername(username);
+		User curruser = findByUsername(username);
 
 		if(curruser == null){
 	        throw new UsernameNotFoundException("Usuário não autorizado.");
@@ -89,9 +88,13 @@ public class UserServiceImpl implements UserDetailsService {
 	}
 	
 	public User userLogged() {
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = user.getUsername();
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userDetails.getUsername();
+		
+		User user = findByUsername(username);
+		//Muda valor da senha para não ser mostrada
+		user.setPassword(null);
 
-		return repository.findByUsername(username);
+		return user;
 	}
 }

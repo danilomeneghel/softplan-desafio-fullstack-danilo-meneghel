@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.Parecer;
 import app.entity.User;
+import app.dto.UserDTO;
 import app.service.ParecerServiceImpl;
 import app.service.UserServiceImpl;
 import app.util.CustomErrorType;
@@ -44,16 +45,15 @@ public class ParecerController {
 	public ResponseEntity<List<Parecer>> listAllPareceres(Principal principal) {
 		String username = (principal == null) ? "user" : principal.getName();
 		User user = userService.findByUsername(username);
-		
+		UserDTO userDTO = new UserDTO(user.getId());
+
 		List<Parecer> pareceres = null;
 		if (user != null) { 
 			if (user.getRole().equals("ADMIN"))
 				pareceres = parecerService.findAllByOrderByProcessoAsc();
 			else
-				pareceres = parecerService.findAllByUser(user.getId());
-		} else {
-			return new ResponseEntity<List<Parecer>>(HttpStatus.NO_CONTENT);
-		}
+				pareceres = parecerService.findAllByUser(userDTO);
+		} 
 		
 		return new ResponseEntity<List<Parecer>>(pareceres, HttpStatus.OK);
 	}

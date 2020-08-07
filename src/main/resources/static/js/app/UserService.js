@@ -57,7 +57,7 @@ angular.module('userApp').factory('UserService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao criar usuário : ' + errResponse.data.errorMessage);
+                    console.error('Erro ao criar usuário: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );
@@ -72,7 +72,7 @@ angular.module('userApp').factory('UserService', [
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao atualizar usuário com id :' + id);
+                    console.error('Erro ao atualizar usuário: ' + errResponse.data);
                     deferred.reject(errResponse);
                 }
             );

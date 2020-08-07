@@ -16,6 +16,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import app.dto.UserDTO;
+
 @Entity(name="parecer")
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -49,5 +51,5 @@ public class Parecer {
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JoinColumn(name = "iduser", referencedColumnName="id")
-    private User user;
+    private UserDTO user;
 }

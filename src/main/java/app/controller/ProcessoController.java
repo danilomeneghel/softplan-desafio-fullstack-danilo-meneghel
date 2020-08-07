@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.Processo;
 import app.entity.User;
+import app.dto.UserDTO;
 import app.service.ProcessoServiceImpl;
 import app.service.UserServiceImpl;
 import app.util.CustomErrorType;
@@ -44,17 +45,16 @@ public class ProcessoController {
 	public ResponseEntity<List<Processo>> listAllProcessos(Principal principal) {
 		String username = (principal == null) ? "user" : principal.getName();
 		User user = userService.findByUsername(username);
-		
+		UserDTO userDTO = new UserDTO(user.getId());
+
 		List<Processo> processos = null;
 		if(user != null) {
 			if (user.getRole().equals("ADMIN")) 
 				processos = processoService.findAllByOrderByTituloAsc();
 			else
-				processos = processoService.findAllByCriador(user.getId());
-		} else {
-			return new ResponseEntity<List<Processo>>(HttpStatus.NO_CONTENT);
-		}
-		
+				processos = processoService.findAllByCriador(userDTO);
+		} 
+
 		return new ResponseEntity<List<Processo>>(processos, HttpStatus.OK);
 	}
 
@@ -79,8 +79,12 @@ public class ProcessoController {
 					HttpStatus.CONFLICT);
 		}
 		
+		//Pega o Usuário logado
+		User user = userService.userLogged();
+		UserDTO userDTO = new UserDTO(user.getId());
+
 		//Seta o Usuário logado
-		processo.setCriador(userService.userLogged());
+		processo.setCriador(userDTO);
 		//Seta os Pareceres
 		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
 
@@ -101,8 +105,12 @@ public class ProcessoController {
 					HttpStatus.NOT_FOUND);
 		}
 		
+		//Pega o Usuário logado
+		User user = userService.userLogged();
+		UserDTO userDTO = new UserDTO(user.getId());
+
 		//Seta o Usuário logado
-		processo.setCriador(userService.userLogged());
+		processo.setCriador(userDTO);
 		//Seta os Pareceres
 		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
 		
