@@ -21,13 +21,13 @@ public class ParecerServiceImpl {
     public Parecer findParecerById(Long id) {
         return repository.findById(id).orElse(new Parecer());
     }
-
-    public List<Parecer> findAllByOrderByComentarioAsc() {
-        return repository.findAllByOrderByComentarioAsc();
+    
+    public List<Parecer> findAllByOrderByProcessoAsc() {
+    	return repository.findAllByOrderByProcessoAsc();
     }
     
-    public List<Parecer> findAllByStatusOrderByComentarioAsc(String status) {
-    	return repository.findAllByStatusOrderByComentarioAsc(status);
+    public List<Parecer> findAllByUser(Long id) {
+    	return repository.findAllByUser(id);
     }
 
     public Parecer findByComentario(String comentario) {

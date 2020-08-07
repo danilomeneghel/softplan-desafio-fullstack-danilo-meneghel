@@ -46,13 +46,12 @@ public class ParecerController {
 		User user = userService.findByUsername(username);
 		
 		List<Parecer> pareceres = null;
-		if (user.getRole().equals("ADMIN")) {
-			pareceres = parecerService.findAllByOrderByComentarioAsc();
+		if (user != null) { 
+			if (user.getRole().equals("ADMIN"))
+				pareceres = parecerService.findAllByOrderByProcessoAsc();
+			else
+				pareceres = parecerService.findAllByUser(user.getId());
 		} else {
-			pareceres = parecerService.findAllByStatusOrderByComentarioAsc("Ativo");
-		}
-		
-		if (pareceres.isEmpty()) {
 			return new ResponseEntity<List<Parecer>>(HttpStatus.NO_CONTENT);
 		}
 		

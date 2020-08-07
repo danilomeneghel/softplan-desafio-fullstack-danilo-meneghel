@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ParecerRepository extends CrudRepository<Parecer, Long> {
 
     Parecer findByComentario(String comentario);
-    List<Parecer> findAllByOrderByComentarioAsc();
-    List<Parecer> findAllByStatusOrderByComentarioAsc(String status);
+    List<Parecer> findAllByOrderByProcessoAsc();
+    List<Parecer> findAllByUser(Long id);
 
 }

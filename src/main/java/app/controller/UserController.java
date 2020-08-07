@@ -44,6 +44,7 @@ public class UserController {
 			//Muda valor da senha para não ser mostrada
 			user.setPassword(null);
 		}
+		
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 

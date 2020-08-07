@@ -2,6 +2,7 @@ package app.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -21,9 +22,11 @@ import java.util.Set;
 
 @Entity(name="user")
 @Getter @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
 	@Id
+	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

@@ -46,13 +46,12 @@ public class ProcessoController {
 		User user = userService.findByUsername(username);
 		
 		List<Processo> processos = null;
-		if (user.getRole().equals("ADMIN")) {
-			processos = processoService.findAllByOrderByTituloAsc();
+		if(user != null) {
+			if (user.getRole().equals("ADMIN")) 
+				processos = processoService.findAllByOrderByTituloAsc();
+			else
+				processos = processoService.findAllByCriador(user.getId());
 		} else {
-			processos = processoService.findAllByCriador(user.getId());
-		}
-		
-		if (processos.isEmpty()) {
 			return new ResponseEntity<List<Processo>>(HttpStatus.NO_CONTENT);
 		}
 		
