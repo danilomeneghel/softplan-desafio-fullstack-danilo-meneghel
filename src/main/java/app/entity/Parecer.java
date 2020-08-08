@@ -51,5 +51,6 @@ public class Parecer {
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JoinColumn(name = "iduser", referencedColumnName="id")
-    private UserDTO user;
+	private UserDTO user;
+	
 }
