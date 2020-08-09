@@ -53,18 +53,30 @@ public class ProcessoParecerController {
 
 	@ApiOperation(value = "Lista todos os Pareceres")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.GET)
-	public ResponseEntity<List<Processo>> listAllProcessoParecer() {
+	public ResponseEntity<List<Parecer>> listAllProcessoParecer() {
 		//Pega o Usuário logado
 		UserDTO userDTO = userService.userLogged();
 
-		List<Processo> processo = null;
+		List<Parecer> parecer = null;
 		if (userDTO != null) { 
 			if (userDTO.getRole().equals("ADMIN"))
-				processo = processoService.findAll();
+				parecer = parecerService.findAllByOrderByProcessoAsc();
 			else
-				processo = processoService.findAllByUsers(userDTO);
+				parecer = parecerService.findAllByUser(userDTO);
 		} 		
-		return new ResponseEntity<List<Processo>>(processo, HttpStatus.OK);
+		return new ResponseEntity<List<Parecer>>(parecer, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Pega um Parecer")
+	@RequestMapping(value = "/processo-parecer/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getParecer(@PathVariable("id") Long id) {
+		Parecer parecer = parecerService.findParecerById(id);
+		if (parecer == null) {
+			logger.error("Parecer com id {} não encontrada.", id);
+			return new ResponseEntity<Object>(new CustomErrorType("Usuário com id " + id + " não encontrado."),
+					HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Parecer>(parecer, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Cria o Parecer")

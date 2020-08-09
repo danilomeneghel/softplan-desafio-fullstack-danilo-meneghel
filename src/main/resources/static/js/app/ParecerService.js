@@ -48,7 +48,7 @@ angular.module('parecerApp').factory('ParecerService', [
             $localStorage.parecer = "";
             $localStorage.processo = "";
             var deferred = $q.defer();
-            $http.get(urls.PARECER_SERVICE_API + "/" + id).then(
+            $http.get(urls.PROCESSOPARECER_SERVICE_API + "/" + id).then(
                 function (responseParecer) {
                     console.log('Parecer carregado com id :' + id);
                     deferred.resolve(responseParecer.data);
@@ -96,7 +96,7 @@ angular.module('parecerApp').factory('ParecerService', [
         function removeParecer(id) {
             if(confirm('Tem certeza que deseja excluir esse item?')) {
                 var deferred = $q.defer();
-                $http.delete(urls.PARECER_SERVICE_API + "/" + id).then(
+                $http.delete(urls.PROCESSOPARECER_SERVICE_API + "/" + id).then(
                     function (response) {
                         loadAllPareceres();
                         deferred.resolve(response.data);

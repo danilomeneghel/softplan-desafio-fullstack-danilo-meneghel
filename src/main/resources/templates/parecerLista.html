@@ -22,20 +22,20 @@
                         <th>Processo</th>
                         <th>Comentário</th>
                         <th>Status</th>
-                        <th>Data Criada</th>
+                        <th>Data Criada Parecer</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="processoParecer in filterData = (ctrl.getAllProcessoPareceres()| filter: pesquisar) | limitTo: 5:5*(page-1)">
-                        <td>{{processoParecer.idparecer}}</td>
-                        <td>{{processoParecer.idprocesso.processo.titulo}}</td>
-                        <td>{{processoParecer.idparecer.parecer.comentario}}</td>
-                        <td>{{processoParecer.idprocesso.status}}</td>
-                        <td>{{processoParecer.idparecer.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
+                    <tr ng-repeat="parecer in filterData = (ctrl.getAllProcessoPareceres()| filter: pesquisar) | limitTo: 5:5*(page-1)">
+                        <td>{{parecer.id}}</td>
+                        <td>{{parecer.processo.titulo}}</td>
+                        <td>{{parecer.comentario}}</td>
+                        <td>{{parecer.processo.status}}</td>
+                        <td>{{parecer.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(processoParecer.idparecer)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
-                            <a sec:authorize="hasAnyAuthority('ADMIN')" ng-click="ctrl.removeParecer(processoParecer.idparecer)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(parecer.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN')" ng-click="ctrl.removeParecer(parecer.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
                 </tbody>
