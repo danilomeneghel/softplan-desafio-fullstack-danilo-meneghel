@@ -34,6 +34,13 @@ angular.module('processoApp').controller('ProcessoController', [
         }
         
         function createProcesso(processo) {
+            processo.users = [];
+            Object.values(processo.finalizadores).forEach(id => {
+                var user = {id:null};
+                user.id = id;
+                processo.users.push(user);
+            });
+
             ProcessoService.createProcesso(processo).then(
                 function (response) {
                     console.log('Processo criado com sucesso!');
@@ -54,6 +61,13 @@ angular.module('processoApp').controller('ProcessoController', [
         }
 
         function updateProcesso(processo, id) {
+            processo.users = [];
+            Object.values(processo.finalizadores).forEach(id => {
+                var user = {id:null};
+                user.id = id;
+                processo.users.push(user);
+            });
+            
             ProcessoService.updateProcesso(processo, id).then(
                 function (response) {
                     console.log('Processo atualizado com sucesso', response);
