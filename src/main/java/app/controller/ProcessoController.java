@@ -119,11 +119,4 @@ public class ProcessoController {
 		return new ResponseEntity<Processo>(HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "Exclui todos os Processos")
-	@RequestMapping(value = "/processo", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteAllProcessos() {
-		processoService.deleteAllProcessos();
-		return new ResponseEntity<Processo>(HttpStatus.NO_CONTENT);
-	}
-
 }

@@ -20,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.Processo;
 import app.entity.Parecer;
-import app.dto.ProcessoParecerDTO;
 import app.dto.UserDTO;
 
 import app.service.ProcessoParecerService;
@@ -53,18 +52,18 @@ public class ProcessoParecerController {
 
 	@ApiOperation(value = "Lista todos os Pareceres")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.GET)
-	public ResponseEntity<List<Parecer>> listAllProcessoParecer() {
+	public ResponseEntity<List<Processo>> listAllProcessoParecer() {
 		//Pega o Usuário logado
 		UserDTO userDTO = userService.userLogged();
 
-		List<Parecer> parecer = null;
+		List<Processo> processo = null;
 		if (userDTO != null) { 
 			if (userDTO.getRole().equals("ADMIN"))
-				parecer = parecerService.findAllByOrderByProcessoAsc();
+				processo = processoService.findAllByOrderByTituloAsc();
 			else
-				parecer = parecerService.findAllByUser(userDTO);
+				processo = processoService.findAllByUsers(userDTO);
 		} 		
-		return new ResponseEntity<List<Parecer>>(parecer, HttpStatus.OK);
+		return new ResponseEntity<List<Processo>>(processo, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Pega um Parecer")
@@ -81,14 +80,14 @@ public class ProcessoParecerController {
 
 	@ApiOperation(value = "Cria o Parecer")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.POST)
-	public ResponseEntity<?> createParecer(@RequestBody ProcessoParecerDTO processoParecerDTO, UriComponentsBuilder ucBuilder) {
-		processoParecerService.saveParecer(processoParecerDTO);
-		return new ResponseEntity<ProcessoParecerDTO>(processoParecerDTO, HttpStatus.CREATED);
+	public ResponseEntity<?> createParecer(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
+		processoParecerService.saveParecer(processo);
+		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Atualiza o Parecer")
 	@RequestMapping(value = "/processo-parecer/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody ProcessoParecerDTO processoParecerDTO) {
+	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody Processo processo) {
 		if (parecerService.findParecerById(id) == null) {
 			logger.error("Não é possível atualizar. Parecer com id {} não encontrado.", id);
 			return new ResponseEntity<Object>(
@@ -96,28 +95,8 @@ public class ProcessoParecerController {
 					HttpStatus.NOT_FOUND);
 		}
 		
-		processoParecerService.updateParecer(processoParecerDTO);
-		return new ResponseEntity<ProcessoParecerDTO>(processoParecerDTO, HttpStatus.OK);
-	}
-
-	@ApiOperation(value = "Exclui o Parecer")
-	@RequestMapping(value = "/processo-parecer/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteParecer(@PathVariable("id") Long id) {
-		if (parecerService.findParecerById(id) == null) {
-			logger.error("Não é possível excluir. Parecer com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível excluir. Parecer com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
-		}
-		parecerService.deleteParecerById(id);
-		return new ResponseEntity<ProcessoParecerDTO>(HttpStatus.NO_CONTENT);
-	}
-
-	@ApiOperation(value = "Exclui todos os Pareceres")
-	@RequestMapping(value = "/processo-parecer", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteAllPareceres() {
-		parecerService.deleteAllPareceres();
-		return new ResponseEntity<ProcessoParecerDTO>(HttpStatus.NO_CONTENT);
+		processoParecerService.updateParecer(processo);
+		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
 
 }

@@ -3,7 +3,6 @@ package app.service;
 import app.entity.Parecer;
 import app.entity.Processo;
 import app.entity.User;
-import app.dto.ProcessoParecerDTO;
 import app.dto.UserDTO;
 
 import java.util.List;
@@ -31,61 +30,22 @@ public class ProcessoParecerService {
         this.userService = userService;
     }
 
-    /*public List<ProcessoParecerDTO> findAllProcessoParecerToUser() {
+    public void saveParecer(Processo processo) {
         //Pega o Usuário logado
 		UserDTO userDTO = userService.userLogged();
-        
-        List<Processo> processos = processoRepository.findAllByUsers(userDTO);
-
-        List<ProcessoParecerDTO> processoParecerDTO = new ArrayList<>();
-
-        //Verifica se há Parecer para cada Processo associado
-        processos.forEach(processo -> {
-            Parecer parecer = repository.findParecerByProcessoAndUser(processo.getId(), userDTO.getId());
-            if (parecer == null) {
-                parecer = new Parecer();
-                parecer.setUser(userDTO);
-                parecer.setComentario("");
-            }
-            processoParecer.add(
-                processoParecerDTO.builder()
-                    .processoId(processo.getId())
-                    .titulo(processo.getTitulo())
-                    .descricao(processo.getDescricao())
-                    .processoCreatedDate(processo.getCreatedAt())
-                    .parecerId(parecer.getId())
-                    .parecerIduser(parecer.getUser().getId())
-                    .parecerCreatedAt(parecer.getCreatedAt())
-                    .comentario(parecer.getComentario())
-                .build()
-            );
-        });
-        return processos;
-    }*/
-
-    public void saveParecer(ProcessoParecerDTO processoParecerDTO) {
-        //Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
-        //Pega o Processo associado
-        Processo processo = processoRepository.findById(processoParecerDTO.getIdprocesso()).get();
         //Cria um novo Parecer
         Parecer parecer = new Parecer();
         parecer.setProcesso(processo);
         parecer.setUser(userDTO);
-        parecer.setComentario(processoParecerDTO.getComentario());
+        for(Parecer p : processo.getPareceres()) {
+            parecer.setComentario(p.getComentario());
+        }
         
         processo.getPareceres().add(parecer);
         processoRepository.save(processo);
     }
     
-    public void updateParecer(ProcessoParecerDTO processoParecerDTO) {
-        Processo processo = processoRepository.findById(processoParecerDTO.getIdprocesso()).get();
-
-        processo.getPareceres().forEach(parecer -> {
-            if (parecer.getId() == processoParecerDTO.getIdparecer()) {
-                parecer.setComentario(processoParecerDTO.getComentario());
-            }
-        });
+    public void updateParecer(Processo processo) {
         processoRepository.save(processo);
     }
 

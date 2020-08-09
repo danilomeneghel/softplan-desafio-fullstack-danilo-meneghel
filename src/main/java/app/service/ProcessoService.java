@@ -27,10 +27,6 @@ public class ProcessoService {
         return repository.findById(id).orElse(new Processo());
     }
 
-    public List<Processo> findAll() {
-        return repository.findAll();
-    }
-    
     public List<Processo> findAllByUsers(UserDTO userDTO) {
     	return repository.findAllByUsers(userDTO);
     }

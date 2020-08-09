@@ -10,7 +10,6 @@ angular.module('processoApp').factory('ProcessoService', [
             getAllUsers: getAllUsers,
             getProcesso: getProcesso,
             processoParecer: processoParecer,
-            resultadoParecer: resultadoParecer,
             createProcesso: createProcesso,
             updateProcesso: updateProcesso,
             removeProcesso: removeProcesso
@@ -57,11 +56,7 @@ angular.module('processoApp').factory('ProcessoService', [
         function processoParecer() {
             return $localStorage.processo;
         }
-        
-        function resultadoParecer() {
-            return $localStorage.parecer;
-        }
-        
+                
         function getAllProcessos() {
             return $localStorage.processos;
         }

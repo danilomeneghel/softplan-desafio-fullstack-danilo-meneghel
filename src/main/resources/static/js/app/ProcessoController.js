@@ -15,7 +15,6 @@ angular.module('processoApp').controller('ProcessoController', [
         self.removeProcesso = removeProcesso;
         self.editProcesso = editProcesso;
         self.processoParecer = processoParecer;
-        self.resultadoParecer = resultadoParecer;
         self.reset = reset;
         self.resetParecer = resetParecer;
 		
@@ -131,10 +130,6 @@ angular.module('processoApp').controller('ProcessoController', [
             );
         }
         
-        function resultadoParecer() {
-            return ProcessoService.resultadoParecer();
-        }
-
         function reset() {
             self.successMessage = '';
             self.errorMessage = '';

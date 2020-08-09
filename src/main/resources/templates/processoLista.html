@@ -21,6 +21,7 @@
                         <th>ID</th>
                         <th>Título</th>
                         <th sec:authorize="hasAuthority('ADMIN')">Criador</th>
+                        <th>Status</th>
                         <th>Data Criada</th>
                         <th class="text-center">Ações</th>
                     </tr>
@@ -30,6 +31,7 @@
                         <td>{{processo.id}}</td>
                         <td>{{processo.titulo}}</td>
                         <td sec:authorize="hasAuthority('ADMIN')">{{processo.criador.name}}</td>
+                        <td>{{processo.status}}</td>
                         <td>{{processo.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
                             <a sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" ng-click="ctrl.editProcesso(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#processo"><i class="fa fa-edit"></i> Editar</a>
@@ -73,18 +75,18 @@
 		                    <div class="form-group">
 		                        <textarea ng-model="ctrl.processo.descricao" name="descricao" class="form-control" placeholder="Descrição" rows="5"></textarea>
                             </div>
-                            <div class="form-group">
-		                        <select ng-model="ctrl.processo.status" name="status" class="form-control">
-							    	<option value="ABERTO">Aberto</option>
-							    	<option value="FECHADO">Fechado</option>
-		  	 					</select>
-		                    </div>
 		                    <div class="form-group">
                                 <select multiple ng-model="ctrl.processo.finalizadores" name="finalizadores" class="form-control">
                                     <option value="" disabled="disabled">Finalizador</option>
                                     <option ng-repeat="user in ctrl.getAllUsers()" value="{{user.id}}">{{user.name}}</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+		                        <select ng-model="ctrl.processo.status" name="status" class="form-control">
+							    	<option value="ABERTO">Aberto</option>
+							    	<option value="FECHADO">Fechado</option>
+		  	 					</select>
+		                    </div>
 		                </div>
 		                <div class="row">
 		                    <div class="form-actions float-left">

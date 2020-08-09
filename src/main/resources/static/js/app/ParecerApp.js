@@ -19,7 +19,7 @@ app.config([
             resolve: {
                 pareceres: function ($q, ParecerService) {
                     var deferred = $q.defer();
-                    ParecerService.loadAllPareceres().then(deferred.resolve, deferred.resolve);
+                    ParecerService.loadAllProcessoParecer().then(deferred.resolve, deferred.resolve);
                     return deferred.promise;
                 }
             }

@@ -8,13 +8,12 @@ angular.module('parecerApp').controller('ParecerController', [
         self.parecer = {};
 
         self.submitParecer = submitParecer;
-        self.getAllProcessoPareceres = getAllProcessoPareceres;
+        self.getAllProcessoParecer = getAllProcessoParecer;
         self.createParecer = createParecer;
         self.updateParecer = updateParecer;
         self.removeParecer = removeParecer;
         self.editParecer = editParecer;
         self.processoParecer = processoParecer;
-        self.resultadoParecer = resultadoParecer;
         self.reset = reset;
         self.resetParecer = resetParecer;
 		
@@ -32,8 +31,8 @@ angular.module('parecerApp').controller('ParecerController', [
             }
         }
         
-        function createParecer(parecer) {
-            ParecerService.createParecer(parecer).then(
+        function createParecer(processo) {
+            ParecerService.createParecer(processo).then(
                 function (response) {
                     console.log('Parecer criado com sucesso!');
                     self.successMessage = 'Parecer criado com sucesso!';
@@ -71,21 +70,8 @@ angular.module('parecerApp').controller('ParecerController', [
             );
         }
 
-        function removeParecer(id) {
-            ParecerService.removeParecer(id).then(
-                function () {
-                    console.log('Parecer ' + id + ' removido com sucesso');
-                    self.successMessage = 'Parecer removido com sucesso!';
-                    self.errorMessage = '';
-                },
-                function (errResponse) {
-                    console.error('Erro ao remover parecer ' + id + ', Erro :' + errResponse.data);
-                }
-            );
-        }
-
-        function getAllProcessoPareceres() {
-            return ParecerService.getAllProcessoPareceres();
+        function getAllProcessoParecer() {
+            return ParecerService.getAllProcessoParecer();
         }
 
         function editParecer(id) {
@@ -114,10 +100,6 @@ angular.module('parecerApp').controller('ParecerController', [
             );
         }
         
-        function resultadoParecer() {
-            return ParecerService.resultadoParecer();
-        }
-
         function reset() {
             self.successMessage = '';
             self.errorMessage = '';
