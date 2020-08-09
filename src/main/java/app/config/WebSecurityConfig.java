@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.http.HttpMethod;
 
-import app.service.UserServiceImpl;
+import app.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +18,7 @@ import app.service.UserServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserServiceImpl userDetailsService;
+    private UserService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

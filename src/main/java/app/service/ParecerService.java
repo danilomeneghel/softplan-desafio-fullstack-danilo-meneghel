@@ -3,20 +3,22 @@ package app.service;
 import app.entity.Parecer;
 import app.entity.User;
 import app.dto.UserDTO;
-import app.repository.ParecerRepository;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.repository.ParecerRepository;
+
 @Service
-public class ParecerServiceImpl {
+public class ParecerService {
 
     @Autowired
     private final ParecerRepository repository;
 
     @Autowired
-    public ParecerServiceImpl(ParecerRepository repository) {
+    public ParecerService(ParecerRepository repository) {
         this.repository = repository;
     }
 
@@ -43,7 +45,6 @@ public class ParecerServiceImpl {
     public void updateParecer(Parecer parecer) {
         Parecer update = findParecerById(parecer.getId());
         update.setComentario(parecer.getComentario());
-        update.setStatus(parecer.getStatus());
 
         repository.save(update);
     }

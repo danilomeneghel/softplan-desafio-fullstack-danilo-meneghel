@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.Processo;
-import app.entity.User;
 import app.dto.UserDTO;
-import app.service.ProcessoServiceImpl;
-import app.service.UserServiceImpl;
+
+import app.service.ProcessoService;
+import app.service.UserService;
+
 import app.util.CustomErrorType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,26 +36,24 @@ public class ProcessoController {
 	public static final Logger logger = LoggerFactory.getLogger(ProcessoController.class);
 
 	@Autowired
-	ProcessoServiceImpl processoService;
+	ProcessoService processoService;
 		
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	@ApiOperation(value = "Lista todos os Processos")
 	@RequestMapping(value = "/processo", method = RequestMethod.GET)
 	public ResponseEntity<List<Processo>> listAllProcessos(Principal principal) {
-		String username = (principal == null) ? "user" : principal.getName();
-		User user = userService.findByUsername(username);
-		UserDTO userDTO = new UserDTO(user.getId());
+		//Pega o Usuário logado
+		UserDTO userDTO = userService.userLogged();
 
 		List<Processo> processos = null;
-		if(user != null) {
-			if (user.getRole().equals("ADMIN")) 
+		if(userDTO != null) {
+			if (userDTO.getRole().equals("ADMIN")) 
 				processos = processoService.findAllByOrderByTituloAsc();
 			else
 				processos = processoService.findAllByCriador(userDTO);
 		} 
-
 		return new ResponseEntity<List<Processo>>(processos, HttpStatus.OK);
 	}
 
@@ -80,19 +79,12 @@ public class ProcessoController {
 		}
 		
 		//Pega o Usuário logado
-		User user = userService.userLogged();
-		UserDTO userDTO = new UserDTO(user.getId());
-
+		UserDTO userDTO = userService.userLogged();
 		//Seta o Usuário logado
 		processo.setCriador(userDTO);
-		//Seta os Pareceres
-		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
-
-		processoService.saveProcesso(processo);
 		
-		HttpHeaders headers = new HttpHeaders();		
-		headers.setLocation(ucBuilder.path("/api/processo/{id}").buildAndExpand(processo.getId()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+		processoService.saveProcesso(processo);		
+		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Atualiza o Processo")
@@ -106,13 +98,9 @@ public class ProcessoController {
 		}
 		
 		//Pega o Usuário logado
-		User user = userService.userLogged();
-		UserDTO userDTO = new UserDTO(user.getId());
-
+		UserDTO userDTO = userService.userLogged();
 		//Seta o Usuário logado
 		processo.setCriador(userDTO);
-		//Seta os Pareceres
-		processo.getPareceres().forEach(parecer -> parecer.setProcesso(processo));
 		
 		processoService.updateProcesso(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
@@ -121,8 +109,7 @@ public class ProcessoController {
 	@ApiOperation(value = "Exclui o Processo")
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteProcesso(@PathVariable("id") Long id) {
-		Processo processo = processoService.findProcessoById(id);
-		if (processo == null) {
+		if (processoService.findProcessoById(id) == null) {
 			logger.error("Não é possível excluir. Processo com id {} não encontrado.", id);
 			return new ResponseEntity<Object>(
 					new CustomErrorType("Não é possível excluir. Processo com id " + id + " não encontrado."),
@@ -134,7 +121,7 @@ public class ProcessoController {
 
 	@ApiOperation(value = "Exclui todos os Processos")
 	@RequestMapping(value = "/processo", method = RequestMethod.DELETE)
-	public ResponseEntity<Processo> deleteAllProcessos() {
+	public ResponseEntity<?> deleteAllProcessos() {
 		processoService.deleteAllProcessos();
 		return new ResponseEntity<Processo>(HttpStatus.NO_CONTENT);
 	}

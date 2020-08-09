@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.User;
-import app.service.UserServiceImpl;
+import app.dto.UserDTO;
+
+import app.service.UserService;
+
 import app.util.CustomErrorType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,20 +34,17 @@ public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	@ApiOperation(value = "Lista todos os Usuários")
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllUsers() {
 		List<User> users = userService.findAllByOrderByNameAsc();
-		if (users.isEmpty()) {
+		if (users.isEmpty())
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
-		}
-		for (User user : users) {
-			//Muda valor da senha para não ser mostrada
-			user.setPassword(null);
-		}
 		
+		//Muda valor da senha para não ser mostrada
+		users.forEach(user -> user.setPassword(null));		
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 	
@@ -52,14 +52,11 @@ public class UserController {
 	@RequestMapping(value = "/finalizador", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllFinalizadores() {
 		List<User> users = userService.findAllByRoleOrderByUsernameAsc("FINAL");
-		if (users.isEmpty()) {
+		if (users.isEmpty())
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
-		}
-		for (User user : users) {
-			//Muda valor da senha para não ser mostrada
-			user.setPassword(null);
-		}
 		
+		//Muda valor da senha para não ser mostrada
+		users.forEach(user -> user.setPassword(null));		
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
@@ -107,9 +104,7 @@ public class UserController {
 		userService.encryptPassword(user);
 
 		userService.saveUser(user);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/user/{id}").buildAndExpand(user.getId()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Atualiza o Usuário")
@@ -132,8 +127,7 @@ public class UserController {
 	@ApiOperation(value = "Exclui o Usuário")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
-		User user = userService.findUserById(id);
-		if (user == null) {
+		if (userService.findUserById(id) == null) {
 			logger.error("Não é possível excluir. Usuário com id {} não encontrado.", id);
 			return new ResponseEntity<Object>(
 					new CustomErrorType("Não é possível excluir. Usuário com id " + id + " não encontrado."),
@@ -145,7 +139,7 @@ public class UserController {
 
 	@ApiOperation(value = "Exclui todos os Usuários")
 	@RequestMapping(value = "/user", method = RequestMethod.DELETE)
-	public ResponseEntity<User> deleteAllUsers() {
+	public ResponseEntity<?> deleteAllUsers() {
 		userService.deleteAllUsers();
 		return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 	}

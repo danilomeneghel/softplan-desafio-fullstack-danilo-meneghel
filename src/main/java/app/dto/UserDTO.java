@@ -11,11 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import app.entity.Processo;
-import app.entity.Parecer;
 
 @Entity(name="user")
 @Getter @Setter
@@ -31,7 +29,7 @@ public class UserDTO {
 
 	private String username;
 
-	private String status;
+	private String role;
 
 	public UserDTO() {}
 	
@@ -43,14 +41,16 @@ public class UserDTO {
 		this.id = id;
 		this.username = username;
 	}
+	
+	public UserDTO(Long id, String name, String username, String role) {
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.role = role;
+	}
 
 	@OneToMany(mappedBy = "criador")
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JsonIgnore
-    private Set<Processo> processos = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JsonIgnore
-    private Set<Parecer> pareceres = new HashSet<>();
+    private List<Processo> processos;
 }

@@ -3,20 +3,22 @@ package app.service;
 import app.entity.Processo;
 import app.entity.User;
 import app.dto.UserDTO;
-import app.repository.ProcessoRepository;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.repository.ProcessoRepository;
+
 @Service
-public class ProcessoServiceImpl {
+public class ProcessoService {
 
     @Autowired
     private final ProcessoRepository repository;
 
     @Autowired
-    public ProcessoServiceImpl(ProcessoRepository repository) {
+    public ProcessoService(ProcessoRepository repository) {
         this.repository = repository;
     }
 

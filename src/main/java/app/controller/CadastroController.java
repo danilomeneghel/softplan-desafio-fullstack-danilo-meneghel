@@ -12,14 +12,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 import app.entity.User;
-import app.service.UserServiceImpl;
+import app.service.UserService;
 import java.security.Principal;
 
 @Controller
 public class CadastroController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @RequestMapping(value = "cadastro")
     public String novoCadastro(Model model) {

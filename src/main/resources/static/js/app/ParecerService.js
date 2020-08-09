@@ -64,7 +64,7 @@ angular.module('parecerApp').factory('ParecerService', [
         function createParecer(parecer) {
             var deferred = $q.defer();
             console.log(parecer);
-            $http.post(urls.PARECER_SERVICE_API, parecer).then(
+            $http.post(urls.PROCESSOPARECER_SERVICE_API, parecer).then(
                 function (response) {
                     loadAllPareceres();
                     deferred.resolve(response.data);
@@ -80,7 +80,7 @@ angular.module('parecerApp').factory('ParecerService', [
         function updateParecer(parecer, id) {
             var deferred = $q.defer();
             console.log(parecer);
-            $http.put(urls.PARECER_SERVICE_API + "/" + id, parecer).then(
+            $http.put(urls.PROCESSOPARECER_SERVICE_API + "/" + id, parecer).then(
                 function (response) {
                     loadAllPareceres();
                     deferred.resolve(response.data);

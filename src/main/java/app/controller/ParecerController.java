@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import app.entity.Parecer;
-import app.entity.User;
 import app.dto.UserDTO;
-import app.service.ParecerServiceImpl;
-import app.service.UserServiceImpl;
+
+import app.service.ParecerService;
+import app.service.UserService;
+
 import app.util.CustomErrorType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,26 +36,24 @@ public class ParecerController {
 	public static final Logger logger = LoggerFactory.getLogger(ParecerController.class);
 
 	@Autowired
-	ParecerServiceImpl parecerService;
-		
+	ParecerService parecerService;
+	
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	@ApiOperation(value = "Lista todos os Pareceres")
 	@RequestMapping(value = "/parecer", method = RequestMethod.GET)
-	public ResponseEntity<List<Parecer>> listAllPareceres(Principal principal) {
-		String username = (principal == null) ? "user" : principal.getName();
-		User user = userService.findByUsername(username);
-		UserDTO userDTO = new UserDTO(user.getId());
+	public ResponseEntity<List<Parecer>> listAllPareceres() {
+		//Pega o Usuário logado
+		UserDTO userDTO = userService.userLogged();
 
 		List<Parecer> pareceres = null;
-		if (user != null) { 
-			if (user.getRole().equals("ADMIN"))
+		if (userDTO != null) { 
+			if (userDTO.getRole().equals("ADMIN"))
 				pareceres = parecerService.findAllByOrderByProcessoAsc();
 			else
 				pareceres = parecerService.findAllByUser(userDTO);
-		} 
-		
+		} 		
 		return new ResponseEntity<List<Parecer>>(pareceres, HttpStatus.OK);
 	}
 
@@ -68,57 +67,6 @@ public class ParecerController {
 					HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Parecer>(parecer, HttpStatus.OK);
-	}
-
-	@ApiOperation(value = "Cria o Parecer")
-	@RequestMapping(value = "/parecer", method = RequestMethod.POST)
-	public ResponseEntity<?> createParecer(@RequestBody Parecer parecer, UriComponentsBuilder ucBuilder) {
-		if (parecerService.isParecerExist(parecer)) {
-			logger.error("Não é possível criar. Parecer com comentário {} já existe", parecer.getComentario());
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível criar. Parecer com comentário " + parecer.getComentario() + " já existe."),
-					HttpStatus.CONFLICT);
-		}
-			
-		parecerService.saveParecer(parecer);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/parecer/{id}").buildAndExpand(parecer.getId()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-	}
-
-	@ApiOperation(value = "Atualiza o Parecer")
-	@RequestMapping(value = "/parecer/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody Parecer parecer) {
-		if (parecerService.findParecerById(id) == null) {
-			logger.error("Não é possível atualizar. Parecer com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível atualizar. Parecer com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
-		}
-		
-		parecerService.updateParecer(parecer);
-		return new ResponseEntity<Parecer>(parecer, HttpStatus.OK);
-	}
-
-	@ApiOperation(value = "Exclui o Parecer")
-	@RequestMapping(value = "/parecer/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteParecer(@PathVariable("id") Long id) {
-		Parecer parecer = parecerService.findParecerById(id);
-		if (parecer == null) {
-			logger.error("Não é possível excluir. Parecer com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível excluir. Parecer com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
-		}
-		parecerService.deleteParecerById(id);
-		return new ResponseEntity<Parecer>(HttpStatus.NO_CONTENT);
-	}
-
-	@ApiOperation(value = "Exclui todos os Pareceres")
-	@RequestMapping(value = "/parecer", method = RequestMethod.DELETE)
-	public ResponseEntity<Parecer> deleteAllPareceres() {
-		parecerService.deleteAllPareceres();
-		return new ResponseEntity<Parecer>(HttpStatus.NO_CONTENT);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -31,8 +32,6 @@ public class Parecer {
 
 	private String comentario;
 
-	private String status = "PENDENTE";
-
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -43,9 +42,10 @@ public class Parecer {
 
 	public Parecer() {}
 
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JoinColumn(name = "idprocesso", referencedColumnName="id")
+	@JsonBackReference
 	private Processo processo;
 	
 	@ManyToOne

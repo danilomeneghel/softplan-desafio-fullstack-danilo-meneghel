@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -17,8 +18,7 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import app.dto.UserDTO;
 
@@ -36,7 +36,9 @@ public class Processo {
 	private String titulo;
 
 	private String descricao;
-	
+
+	private String status = "ABERTO";
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
@@ -47,13 +49,21 @@ public class Processo {
 
 	public Processo() {}
 
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.PERSIST)
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Parecer> pareceres = new HashSet<>();
-	
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JoinColumn(name = "idcriador", referencedColumnName="id")
 	private UserDTO criador;
+
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@JsonManagedReference
+    private List<Parecer> pareceres;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_processo",
+        joinColumns = @JoinColumn(name = "idprocesso"),
+        inverseJoinColumns = @JoinColumn(name = "iduser")
+	)
+	private List<UserDTO> users;
 }

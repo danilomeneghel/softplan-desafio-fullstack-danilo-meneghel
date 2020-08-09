@@ -1,6 +1,8 @@
 package app.service;
 
 import app.entity.User;
+import app.dto.UserDTO;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +13,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import app.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private final UserRepository repository;
 
 	@Autowired
-	public UserServiceImpl(UserRepository repository) {
+	public UserService(UserRepository repository) {
 		this.repository = repository;
 	}
 
@@ -91,14 +94,15 @@ public class UserServiceImpl implements UserDetailsService {
 		return user;
 	}
 	
-	public User userLogged() {
+	public UserDTO userLogged() {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
 		
 		User user = findByUsername(username);
-		//Muda valor da senha para não ser mostrada
-		user.setPassword(null);
 
-		return user;
+		//Cria um novo objeto com apenas os dados necessários do Usuário
+		UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getRole());
+
+		return userDTO;
 	}
 }
