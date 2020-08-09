@@ -33,18 +33,18 @@ public class ProcessoParecerService {
 
     /*public List<ProcessoParecerDTO> findAllProcessoParecerToUser() {
         //Pega o Usuário logado
-		User user = userService.userLogged();
+		UserDTO userDTO = userService.userLogged();
         
-        List<Processo> processos = processoRepository.findAllByUser(user);
+        List<Processo> processos = processoRepository.findAllByUsers(userDTO);
 
         List<ProcessoParecerDTO> processoParecerDTO = new ArrayList<>();
 
         //Verifica se há Parecer para cada Processo associado
         processos.forEach(processo -> {
-            Parecer parecer = repository.findParecerByProcessoAndUser(processo.getId(), user.getId());
+            Parecer parecer = repository.findParecerByProcessoAndUser(processo.getId(), userDTO.getId());
             if (parecer == null) {
                 parecer = new Parecer();
-                parecer.setUser(user);
+                parecer.setUser(userDTO);
                 parecer.setComentario("");
             }
             processoParecer.add(
@@ -60,7 +60,7 @@ public class ProcessoParecerService {
                 .build()
             );
         });
-        return processoParecer;
+        return processos;
     }*/
 
     public void saveParecer(ProcessoParecerDTO processoParecerDTO) {

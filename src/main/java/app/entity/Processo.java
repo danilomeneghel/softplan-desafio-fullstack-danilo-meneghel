@@ -61,7 +61,7 @@ public class Processo {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "user_processo",
+        name = "processo_user",
         joinColumns = @JoinColumn(name = "idprocesso"),
         inverseJoinColumns = @JoinColumn(name = "iduser")
 	)

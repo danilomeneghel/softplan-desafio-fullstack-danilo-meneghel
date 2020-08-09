@@ -5,7 +5,7 @@ angular.module('parecerApp').factory('ParecerService', [
     function ($localStorage, $http, $q, urls) {
         var factory = {
             loadAllPareceres: loadAllPareceres,
-            getAllPareceres: getAllPareceres,
+            getAllProcessoPareceres: getAllProcessoPareceres,
             getParecer: getParecer,
             processoParecer: processoParecer,
             resultadoProcesso: resultadoProcesso,
@@ -18,7 +18,7 @@ angular.module('parecerApp').factory('ParecerService', [
 
         function loadAllPareceres() {
             var deferred = $q.defer();
-            $http.get(urls.PARECER_SERVICE_API).then(
+            $http.get(urls.PROCESSOPARECER_SERVICE_API).then(
                 function (response) {
                     console.log('Pareceres carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
@@ -40,7 +40,7 @@ angular.module('parecerApp').factory('ParecerService', [
             return $localStorage.processo;
         }
         
-        function getAllPareceres() {
+        function getAllProcessoPareceres() {
             return $localStorage.pareceres;
         }
 

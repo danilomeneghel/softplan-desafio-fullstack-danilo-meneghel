@@ -8,7 +8,7 @@ angular.module('parecerApp').controller('ParecerController', [
         self.parecer = {};
 
         self.submitParecer = submitParecer;
-        self.getAllPareceres = getAllPareceres;
+        self.getAllProcessoPareceres = getAllProcessoPareceres;
         self.createParecer = createParecer;
         self.updateParecer = updateParecer;
         self.removeParecer = removeParecer;
@@ -84,8 +84,8 @@ angular.module('parecerApp').controller('ParecerController', [
             );
         }
 
-        function getAllPareceres() {
-            return ParecerService.getAllPareceres();
+        function getAllProcessoPareceres() {
+            return ParecerService.getAllProcessoPareceres();
         }
 
         function editParecer(id) {

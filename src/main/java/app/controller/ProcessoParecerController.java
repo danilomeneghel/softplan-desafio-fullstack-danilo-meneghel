@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import app.entity.Processo;
 import app.entity.Parecer;
 import app.dto.ProcessoParecerDTO;
 import app.dto.UserDTO;
 
 import app.service.ProcessoParecerService;
 import app.service.ParecerService;
+import app.service.ProcessoService;
 import app.service.UserService;
 
 import app.util.CustomErrorType;
@@ -41,10 +43,29 @@ public class ProcessoParecerController {
 	ProcessoParecerService processoParecerService;
 
 	@Autowired
+	ProcessoService processoService;
+
+	@Autowired
 	ParecerService parecerService;
 	
 	@Autowired
 	UserService userService;
+
+	@ApiOperation(value = "Lista todos os Pareceres")
+	@RequestMapping(value = "/processo-parecer", method = RequestMethod.GET)
+	public ResponseEntity<List<Processo>> listAllProcessoParecer() {
+		//Pega o Usuário logado
+		UserDTO userDTO = userService.userLogged();
+
+		List<Processo> processo = null;
+		if (userDTO != null) { 
+			if (userDTO.getRole().equals("ADMIN"))
+				processo = processoService.findAll();
+			else
+				processo = processoService.findAllByUsers(userDTO);
+		} 		
+		return new ResponseEntity<List<Processo>>(processo, HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Cria o Parecer")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.POST)

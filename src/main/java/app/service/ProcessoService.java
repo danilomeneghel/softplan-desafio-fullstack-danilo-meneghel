@@ -1,6 +1,7 @@
 package app.service;
 
 import app.entity.Processo;
+import app.entity.Parecer;
 import app.entity.User;
 import app.dto.UserDTO;
 
@@ -24,6 +25,14 @@ public class ProcessoService {
 
     public Processo findProcessoById(Long id) {
         return repository.findById(id).orElse(new Processo());
+    }
+
+    public List<Processo> findAll() {
+        return repository.findAll();
+    }
+    
+    public List<Processo> findAllByUsers(UserDTO userDTO) {
+    	return repository.findAllByUsers(userDTO);
     }
 
     public List<Processo> findAllByOrderByTituloAsc() {
