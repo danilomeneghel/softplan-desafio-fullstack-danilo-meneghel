@@ -103,7 +103,7 @@ public class UserController {
 		//Criptografa a senha
 		userService.encryptPassword(user);
 
-		userService.saveUser(user);
+		userService.save(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
@@ -120,7 +120,7 @@ public class UserController {
 		//Criptografa a senha
 		userService.encryptPassword(user);
 
-		userService.updateUser(user);
+		userService.save(user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 

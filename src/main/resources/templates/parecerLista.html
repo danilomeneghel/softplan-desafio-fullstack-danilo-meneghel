@@ -17,7 +17,7 @@
                         <th>Processo</th>
                         <th>Comentário</th>
                         <th>Status</th>
-                        <th>Data Criada Parecer</th>
+                        <th>Data Parecer</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
@@ -27,9 +27,14 @@
                         <td>{{processo.titulo}}</td>
                         <td>{{processo.pareceres[0].comentario}}</td>
                         <td>{{processo.status}}</td>
-                        <td>{{processo.pareceres[0].createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{processo.pareceres[0].updateAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="{{(!processo.pareceres[0].id) ? ctrl.reset() : ctrl.editParecer(processo.pareceres[0].id)}}" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> {{(!processo.pareceres[0].id) ? 'Adicionar' : 'Editar'}} Parecer</a>
+                            <div ng-if="processo.pareceres[0].id">
+                                <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar Parecer</a>
+                            </div>
+                            <div ng-else>
+                                <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.reset(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-plus"></i> Adicionar Parecer</a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -61,10 +66,10 @@
 		            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
 		            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
 		            <form ng-submit="ctrl.submitParecer()" name="parecerForm" class="form-horizontal">
-		                <input type="text" ng-model="ctrl.id" />
+		                <input type="text" ng-model="ctrl.processo.pareceres[0].id" />
 		                <div class="form-panel">
 		                    <div class="form-group">
-		                        <textarea ng-model="ctrl.comentario" name="comentario" class="form-control" placeholder="Comentário" rows="5"></textarea>
+		                        <textarea ng-model="ctrl.processo.pareceres[0].comentario" name="comentario" class="form-control" placeholder="Comentário" rows="5"></textarea>
 		                    </div>
 		                </div>
 		                <div class="row">

@@ -43,11 +43,7 @@ public class ProcessoService {
         return repository.findByTitulo(titulo);
     }
 
-    public void saveProcesso(Processo processo) {
-        repository.save(processo);
-    }
-
-    public void updateProcesso(Processo processo) {
+    public void save(Processo processo) {
         repository.save(processo);
     }
 

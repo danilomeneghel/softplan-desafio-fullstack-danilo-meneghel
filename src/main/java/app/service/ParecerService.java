@@ -34,31 +34,8 @@ public class ParecerService {
     	return repository.findAllByUser(userDTO);
     }
 
-    public Parecer findByComentario(String comentario) {
-        return repository.findByComentario(comentario);
-    }
-
-    public void saveParecer(Parecer parecer) {
+    public void save(Parecer parecer) {
         repository.save(parecer);
-    }
-
-    public void updateParecer(Parecer parecer) {
-        Parecer update = findParecerById(parecer.getId());
-        update.setComentario(parecer.getComentario());
-
-        repository.save(update);
-    }
-
-    public void deleteParecerById(Long id) {
-        repository.deleteById(id);
-    }
-
-    public void deleteAllPareceres() {
-        repository.deleteAll();
-    }
-
-    public boolean isParecerExist(Parecer parecer) {
-        return findByComentario(parecer.getComentario()) != null;
     }
 
 }

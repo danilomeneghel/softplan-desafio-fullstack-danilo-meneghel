@@ -83,7 +83,7 @@ public class ProcessoController {
 		//Seta o Usuário logado
 		processo.setCriador(userDTO);
 		
-		processoService.saveProcesso(processo);		
+		processoService.save(processo);		
 		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 
@@ -102,7 +102,7 @@ public class ProcessoController {
 		//Seta o Usuário logado
 		processo.setCriador(userDTO);
 		
-		processoService.updateProcesso(processo);
+		processoService.save(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
 

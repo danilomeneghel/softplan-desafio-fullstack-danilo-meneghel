@@ -9,7 +9,6 @@ angular.module('processoApp').factory('ProcessoService', [
             getAllProcessos: getAllProcessos,
             getAllUsers: getAllUsers,
             getProcesso: getProcesso,
-            processoParecer: processoParecer,
             createProcesso: createProcesso,
             updateProcesso: updateProcesso,
             removeProcesso: removeProcesso
@@ -52,10 +51,6 @@ angular.module('processoApp').factory('ProcessoService', [
         function getAllUsers() {
             return $localStorage.users;
         }
-
-        function processoParecer() {
-            return $localStorage.processo;
-        }
                 
         function getAllProcessos() {
             return $localStorage.processos;
@@ -66,9 +61,11 @@ angular.module('processoApp').factory('ProcessoService', [
             $localStorage.parecer = "";
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
-                function (responseProcesso) {
+                function (response) {
                     console.log('Processo carregado com id :' + id);
-                    deferred.resolve(responseProcesso.data);
+                    console.log(response);
+                    $localStorage.processo = response;
+                    deferred.resolve(response.data);
                 },
                 function (errResponse) {
                     console.error('Erro ao carregar a processo com o id :' + id);

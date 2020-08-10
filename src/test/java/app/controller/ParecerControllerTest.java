@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import app.ApplicationTests;
 import app.entity.Parecer;
 import app.controller.ParecerController;
-import app.service.ParecerServiceImpl;
+import app.service.ParecerService;
 
 public class ParecerControllerTest extends ApplicationTests {
 
@@ -23,7 +23,7 @@ public class ParecerControllerTest extends ApplicationTests {
 	private ParecerController parecerController;
 
 	@Autowired
-	private ParecerServiceImpl parecerService;
+	private ParecerService parecerService;
 	
 	@Before
 	public void setUp() {

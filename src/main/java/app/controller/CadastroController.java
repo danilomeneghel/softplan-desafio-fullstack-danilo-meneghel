@@ -45,7 +45,7 @@ public class CadastroController {
 	                        userService.encryptPassword(user);
 	                        user.setRole("TRIAD");
 	                        user.setStatus("ATIVO");
-	                        userService.saveUser(user);
+	                        userService.save(user);
 	                        redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
 	                        return "redirect:/login";
 	                    } else {
@@ -61,7 +61,7 @@ public class CadastroController {
 	                userService.encryptPassword(user);
 	                user.setRole(currentUser.getRole());
 	                user.setStatus(currentUser.getStatus());
-	                userService.saveUser(user);
+	                userService.save(user);
 	                model.addAttribute("message", "Usuário atualizado com sucesso!");
 	            }
 	            return "perfil";

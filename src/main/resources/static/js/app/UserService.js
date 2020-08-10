@@ -38,7 +38,7 @@ angular.module('userApp').factory('UserService', [
             var deferred = $q.defer();
             $http.get(urls.USER_SERVICE_API + "/" + id).then(
                 function (response) {
-                    console.log('Carregado usuário com id :' + id);
+                    console.log('Usuário carregado com id :' + id);
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {

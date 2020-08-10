@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import app.ApplicationTests;
 import app.entity.Processo;
 import app.controller.ProcessoController;
-import app.service.ProcessoServiceImpl;
+import app.service.ProcessoService;
 
 public class ProcessoControllerTest extends ApplicationTests {
 
@@ -23,7 +23,7 @@ public class ProcessoControllerTest extends ApplicationTests {
 	private ProcessoController processoController;
 
 	@Autowired
-	private ProcessoServiceImpl processoService;
+	private ProcessoService processoService;
 	
 	@Before
 	public void setUp() {

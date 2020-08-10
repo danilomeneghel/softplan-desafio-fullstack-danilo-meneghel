@@ -22,7 +22,6 @@ import app.entity.Processo;
 import app.entity.Parecer;
 import app.dto.UserDTO;
 
-import app.service.ProcessoParecerService;
 import app.service.ParecerService;
 import app.service.ProcessoService;
 import app.service.UserService;
@@ -37,9 +36,6 @@ import io.swagger.annotations.ApiOperation;
 public class ProcessoParecerController {
 
 	public static final Logger logger = LoggerFactory.getLogger(ProcessoParecerController.class);
-
-	@Autowired
-	ProcessoParecerService processoParecerService;
 
 	@Autowired
 	ProcessoService processoService;
@@ -81,7 +77,19 @@ public class ProcessoParecerController {
 	@ApiOperation(value = "Cria o Parecer")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.POST)
 	public ResponseEntity<?> createParecer(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
-		processoParecerService.saveParecer(processo);
+		//Pega o Usuário logado
+		UserDTO userDTO = userService.userLogged();
+
+		//Cria um novo Parecer
+        Parecer parecer = new Parecer();
+        parecer.setProcesso(processo);
+        parecer.setUser(userDTO);
+        for(Parecer p : processo.getPareceres()) {
+            parecer.setComentario(p.getComentario());
+        }
+        
+        processo.getPareceres().add(parecer);
+		processoService.save(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 
@@ -94,8 +102,8 @@ public class ProcessoParecerController {
 					new CustomErrorType("Não é possível atualizar. Parecer com id " + id + " não encontrado."),
 					HttpStatus.NOT_FOUND);
 		}
-		
-		processoParecerService.updateParecer(processo);
+
+		processoService.save(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
 

@@ -11,11 +11,9 @@ angular.module('parecerApp').controller('ParecerController', [
         self.getAllProcessoParecer = getAllProcessoParecer;
         self.createParecer = createParecer;
         self.updateParecer = updateParecer;
-        self.removeParecer = removeParecer;
         self.editParecer = editParecer;
         self.processoParecer = processoParecer;
         self.reset = reset;
-        self.resetParecer = resetParecer;
 		
         self.successMessage = '';
         self.errorMessage = '';
@@ -23,7 +21,7 @@ angular.module('parecerApp').controller('ParecerController', [
 
         function submitParecer() {
             if (self.parecer.id === undefined || self.parecer.id === null) {
-                console.log('Criando novo parecer');
+                console.log('Criando novo parecer', self.parecer);
                 createParecer(self.parecer);
             } else {
                 updateParecer(self.parecer, self.parecer.id);
@@ -73,6 +71,19 @@ angular.module('parecerApp').controller('ParecerController', [
         function getAllProcessoParecer() {
             return ParecerService.getAllProcessoParecer();
         }
+        
+        function processoParecer(id) {
+            self.successMessage = '';
+            self.errorMessage = '';
+            ParecerService.getProcesso(id).then(
+                function (processo) {
+                    self.processo = processo;
+                },
+                function (errResponse) {
+                    console.error('Erro ao editar processo ' + id + ', Erro :' + errResponse.data);
+                }
+            );
+        }
 
         function editParecer(id) {
             self.successMessage = '';
@@ -87,30 +98,12 @@ angular.module('parecerApp').controller('ParecerController', [
             );
         }
         
-        function processoParecer(id) {
-        	self.successMessage = '';
-            self.errorMessage = '';
-            ParecerService.getParecer(id).then(
-                function (response) {
-                    self.parecer = response;
-                },
-                function (errResponse) {
-                    console.error('Erro ao localizar parecer ' + id + ', Erro :' + errResponse.data);
-                }
-            );
-        }
-        
-        function reset() {
+        function reset(id) {
+            processoParecer(id);
             self.successMessage = '';
             self.errorMessage = '';
-            self.parecer = {};
+            self.pareceres = {comentario:null};
             $scope.parecerForm.$setPristine();
         }
         
-        function resetParecer() {
-            self.errorMessage = '';
-            self.parecer = {};
-            $scope.parecerForm.$setPristine();
-        }
-		
     }]);

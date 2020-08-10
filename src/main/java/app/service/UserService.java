@@ -47,11 +47,7 @@ public class UserService implements UserDetailsService {
 		return repository.findByUsername(username);
 	}
 	
-	public void saveUser(User user) {
-		repository.save(user);
-	}
-
-	public void updateUser(User user) {
+	public void save(User user) {
 		repository.save(user);
 	}
 

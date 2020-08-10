@@ -7,7 +7,7 @@ angular.module('parecerApp').factory('ParecerService', [
             loadAllProcessoParecer: loadAllProcessoParecer,
             getAllProcessoParecer: getAllProcessoParecer,
             getParecer: getParecer,
-            processoParecer: processoParecer,
+            getProcesso: getProcesso,
             createParecer: createParecer,
             updateParecer: updateParecer
         };
@@ -18,6 +18,10 @@ angular.module('parecerApp').factory('ParecerService', [
             var deferred = $q.defer();
             $http.get(urls.PROCESSOPARECER_SERVICE_API).then(
                 function (response) {
+                    if(response.data[0].pareceres.length == 0) {
+                        var pareceres = {id:null, comentario:null};
+                        response.data[0].pareceres.push(pareceres);
+                    }
                     console.log('Processo e Parecer carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
                     deferred.resolve(response);
@@ -29,11 +33,7 @@ angular.module('parecerApp').factory('ParecerService', [
             );
             return deferred.promise;
         }
-        
-        function processoParecer() {
-            return $localStorage.parecer;
-        }
-        
+                
         function getAllProcessoParecer() {
             return $localStorage.pareceres;
         }
@@ -43,9 +43,28 @@ angular.module('parecerApp').factory('ParecerService', [
             $localStorage.processo = "";
             var deferred = $q.defer();
             $http.get(urls.PARECER_SERVICE_API + "/" + id).then(
-                function (responseParecer) {
+                function (response) {
                     console.log('Parecer carregado com id :' + id);
-                    deferred.resolve(responseParecer.data);
+                    console.log(response);
+                    deferred.resolve(response.data);
+                },
+                function (errResponse) {
+                    console.error('Erro ao carregar a parecer com o id :' + id);
+                    deferred.reject(errResponse);
+                }
+            );
+            return deferred.promise;
+        }
+        
+        function getProcesso(id) {
+            $localStorage.parecer = "";
+            $localStorage.processo = "";
+            var deferred = $q.defer();
+            $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
+                function (response) {
+                    console.log('Processo carregado com id :' + id);
+                    console.log(response);
+                    deferred.resolve(response.data);
                 },
                 function (errResponse) {
                     console.error('Erro ao carregar a parecer com o id :' + id);
@@ -55,10 +74,10 @@ angular.module('parecerApp').factory('ParecerService', [
             return deferred.promise;
         }
 
-        function createParecer(parecer) {
+        function createParecer(processo) {
             var deferred = $q.defer();
-            console.log(parecer);
-            $http.post(urls.PROCESSOPARECER_SERVICE_API, parecer).then(
+            console.log(processo);
+            $http.post(urls.PROCESSOPARECER_SERVICE_API, processo).then(
                 function (response) {
                     loadAllProcessoParecer();
                     deferred.resolve(response.data);
@@ -71,10 +90,10 @@ angular.module('parecerApp').factory('ParecerService', [
             return deferred.promise;
         }
 
-        function updateParecer(parecer, id) {
+        function updateParecer(processo, id) {
             var deferred = $q.defer();
-            console.log(parecer);
-            $http.put(urls.PROCESSOPARECER_SERVICE_API + "/" + id, parecer).then(
+            console.log(processo);
+            $http.put(urls.PROCESSOPARECER_SERVICE_API + "/" + id, processo).then(
                 function (response) {
                     loadAllProcessoParecer();
                     deferred.resolve(response.data);

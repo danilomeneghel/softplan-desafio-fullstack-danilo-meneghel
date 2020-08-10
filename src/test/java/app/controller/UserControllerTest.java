@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import app.ApplicationTests;
 import app.entity.User;
 import app.controller.UserController;
-import app.service.UserServiceImpl;
+import app.service.UserService;
 
 public class UserControllerTest extends ApplicationTests {
 
@@ -23,7 +23,7 @@ public class UserControllerTest extends ApplicationTests {
 	private UserController userController;
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 	
 	@Before
 	public void setUp() {
@@ -33,10 +33,10 @@ public class UserControllerTest extends ApplicationTests {
 	@Test
 	public void testPOSTUser() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
-				.param("name", "Bruna")
-				.param("email", "bruna@bruna.com")
-				.param("username", "bruna")
-				.param("password", "a123456")
+				.param("name", "Luana")
+				.param("email", "luana@luana.com")
+				.param("username", "luana")
+				.param("password", "l123456")
 				.param("role", "FINAL")
 				.param("status", "ATIVO")
 				.param("createdAt", "2020-08-04 01:55:54"));

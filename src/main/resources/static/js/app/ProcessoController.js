@@ -16,7 +16,6 @@ angular.module('processoApp').controller('ProcessoController', [
         self.editProcesso = editProcesso;
         self.processoParecer = processoParecer;
         self.reset = reset;
-        self.resetParecer = resetParecer;
 		
         self.successMessage = '';
         self.errorMessage = '';
@@ -136,11 +135,5 @@ angular.module('processoApp').controller('ProcessoController', [
             self.processo = {};
             $scope.processoForm.$setPristine();
         }
-        
-        function resetParecer() {
-            self.errorMessage = '';
-            self.parecer = {};
-            $scope.parecerForm.$setPristine();
-        }
-		
+        		
     }]);
