@@ -20,12 +20,12 @@ angular.module('parecerApp').controller('ParecerController', [
         self.done = false;
 
         function submitParecer() {
-            if (self.parecer.id === undefined || self.parecer.id === null) {
-                console.log('Criando novo parecer', self.parecer);
-                createParecer(self.parecer);
+            if (self.processo.pareceres[0].id === undefined || self.processo.pareceres[0].id === null) {
+                console.log('Criando novo parecer', self.processo);
+                createParecer(self.processo);
             } else {
-                updateParecer(self.parecer, self.parecer.id);
-                console.log('Atualizando parecer com id ', self.parecer.id);
+                console.log('Atualizando parecer com id ', self.processo.id);
+                updateParecer(self.processo, self.processo.pareceres[0].id);
             }
         }
         
@@ -47,14 +47,10 @@ angular.module('parecerApp').controller('ParecerController', [
             );
         }
 
-        function updateParecer(parecer, id) {
-            var update = {id:null, comentario:null, status:null};
-            update.id = parecer.id;
-            update.comentario = parecer.comentario;
-            update.status = parecer.status;
-            ParecerService.updateParecer(update, id).then(
+        function updateParecer(processo, id) {
+            ParecerService.updateParecer(processo, id).then(
                 function (response) {
-                    console.log('Parecer atualizado com sucesso', response);
+                    console.log('Parecer atualizado com sucesso');
                     self.successMessage = 'Parecer atualizado com sucesso';
                     self.errorMessage = '';
                     self.done = true;
@@ -86,16 +82,7 @@ angular.module('parecerApp').controller('ParecerController', [
         }
 
         function editParecer(id) {
-            self.successMessage = '';
-            self.errorMessage = '';
-            ParecerService.getParecer(id).then(
-                function (parecer) {
-                    self.parecer = parecer;
-                },
-                function (errResponse) {
-                    console.error('Erro ao editar parecer ' + id + ', Erro :' + errResponse.data);
-                }
-            );
+            processoParecer(id);
         }
         
         function reset(id) {

@@ -23,11 +23,11 @@ angular.module('processoApp').controller('ProcessoController', [
 
         function submitProcesso() {
             if (self.processo.id === undefined || self.processo.id === null) {
-                console.log('Criando novo processo');
+                console.log('Criando novo processo', self.processo);
                 createProcesso(self.processo);
             } else {
-                updateProcesso(self.processo, self.processo.id);
                 console.log('Atualizando processo com id ', self.processo.id);
+                updateProcesso(self.processo, self.processo.id);
             }
         }
         
@@ -68,7 +68,7 @@ angular.module('processoApp').controller('ProcessoController', [
             
             ProcessoService.updateProcesso(processo, id).then(
                 function (response) {
-                    console.log('Processo atualizado com sucesso', response);
+                    console.log('Processo atualizado com sucesso');
                     self.successMessage = 'Processo atualizado com sucesso';
                     self.errorMessage = '';
                     self.done = true;

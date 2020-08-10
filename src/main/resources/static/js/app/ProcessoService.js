@@ -77,7 +77,6 @@ angular.module('processoApp').factory('ProcessoService', [
 
         function createProcesso(processo) {
             var deferred = $q.defer();
-            console.log(processo);
             $http.post(urls.PROCESSO_SERVICE_API, processo).then(
                 function (response) {
                     loadAllProcessos();
@@ -93,7 +92,6 @@ angular.module('processoApp').factory('ProcessoService', [
 
         function updateProcesso(processo, id) {
             var deferred = $q.defer();
-            console.log(processo);
             $http.put(urls.PROCESSO_SERVICE_API + "/" + id, processo).then(
                 function (response) {
                     loadAllProcessos();
