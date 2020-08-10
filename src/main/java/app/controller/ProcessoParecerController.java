@@ -88,8 +88,7 @@ public class ProcessoParecerController {
             parecer.setComentario(p.getComentario());
         }
         
-        processo.getPareceres().add(parecer);
-		processoService.save(processo);
+		parecerService.save(parecer);
 		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 

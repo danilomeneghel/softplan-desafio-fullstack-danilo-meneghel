@@ -27,12 +27,12 @@
                         <td>{{processo.titulo}}</td>
                         <td>{{processo.pareceres[0].comentario}}</td>
                         <td>{{processo.status}}</td>
-                        <td>{{processo.pareceres[0].updateAt | date: 'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{processo.pareceres[0].updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <div ng-if="processo.pareceres[0].id">
+                            <div ng-if="processo.pareceres[0].comentario.length > 0">
                                 <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.editParecer(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Editar Parecer</a>
                             </div>
-                            <div ng-else-if="!processo.pareceres[0].id">
+                            <div ng-else-if="processo.pareceres[0].comentario.length == 0">
                                 <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.reset(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-plus"></i> Adicionar Parecer</a>
                             </div>
                         </td>

@@ -89,7 +89,6 @@ angular.module('parecerApp').controller('ParecerController', [
             processoParecer(id);
             self.successMessage = '';
             self.errorMessage = '';
-            self.pareceres = {comentario:null};
             $scope.parecerForm.$setPristine();
         }
         

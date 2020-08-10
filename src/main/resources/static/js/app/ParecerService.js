@@ -17,11 +17,10 @@ angular.module('parecerApp').factory('ParecerService', [
             var deferred = $q.defer();
             $http.get(urls.PROCESSOPARECER_SERVICE_API).then(
                 function (response) {
-                    if(response.data[0].pareceres.length == 0) {
-                        var pareceres = {id:null, comentario:null};
-                        response.data[0].pareceres.push(pareceres);
-                    }
                     delete response.data[0].users;
+                    if(response.data[0].pareceres.length == 0)
+                        response.data[0].pareceres = [{id:'', comentario:''}];
+                    
                     console.log('Processo e Parecer carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
                     deferred.resolve(response);
