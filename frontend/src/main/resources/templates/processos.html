@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html ng-app="processoApp">
+    <head>
+        <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    </head>    
+    <body>
+        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+        <div ui-view></div>
+
+        <script type="text/javascript" th:src="@{/app/ProcessoApp.js}"></script>
+        <script type="text/javascript" th:src="@{/app/ProcessoService.js}"></script>
+        <script type="text/javascript" th:src="@{/app/ProcessoController.js}"></script>
+    </body>
+</html>

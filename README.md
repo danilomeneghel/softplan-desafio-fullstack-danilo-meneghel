@@ -2,6 +2,10 @@
 
 Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring-Boot.
 
+Descrição da prova:
+
+https://github.com/g-cpa-squad-produto/softplan-desafio-fullstack
+
 ## Características
 
 - CRUD
@@ -20,6 +24,7 @@ Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring
 - Java JDK 1.8
 - Apache Maven >= 3.6.3
 - PostgreSQL >= 12
+- Docker (Opcional)
 
 ## Tecnologias
 
@@ -31,15 +36,17 @@ Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring
 - CSS
 - Jquery
 - Bootstrap
+- ThymeLeaf
 - AngularJS
 - PostgreSQL
+- Docker
 
 ## Instalação
 
 ```
 $ git clone https://github.com/danilomeneghel/softplan-desafio-fullstack-danilo-meneghel.git
 
-$ cd softplan-desafio-fullstack-danilo-meneghel
+$ cd softplan-desafio-fullstack-danilo-meneghel/backend
 ```
 
 Crie o banco de dados com o nome sistema-processos em seu PostgreSQL.
@@ -56,6 +63,12 @@ Aguarde carregar todo o serviço web. <br>
 Após concluído, abra o seu navegador o seguinte endereço: <br>
 
 http://localhost:8080/
+
+## Docker
+
+```
+docker-compose up --build
+```
 
 ## Swagger 
 

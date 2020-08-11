@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html ng-app="parecerApp">
+    <head>
+        <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+    </head>    
+    <body>
+        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+        <div ui-view></div>
+
+        <script type="text/javascript" th:src="@{/app/ParecerApp.js}"></script>
+        <script type="text/javascript" th:src="@{/app/ParecerService.js}"></script>
+        <script type="text/javascript" th:src="@{/app/ParecerController.js}"></script>
+    </body>
+</html>
