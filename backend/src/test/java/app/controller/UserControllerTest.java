@@ -51,7 +51,7 @@ public class UserControllerTest extends ApplicationTests {
 	@Test
 	public void testGETUser() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/user/" + 1))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+			.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	@Test
