@@ -51,7 +51,7 @@ public class Processo {
 
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JoinColumn(name = "idcriador", referencedColumnName="id")
+	@JoinColumn(name = "idcriador")
 	private UserDTO criador;
 
 	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)

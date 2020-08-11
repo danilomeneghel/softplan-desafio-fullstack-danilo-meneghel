@@ -44,13 +44,13 @@ public class Parecer {
 
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JoinColumn(name = "idprocesso", referencedColumnName="id")
+	@JoinColumn(name = "idprocesso")
 	@JsonBackReference
 	private Processo processo;
 	
 	@ManyToOne
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@JoinColumn(name = "iduser", referencedColumnName="id")
+	@JoinColumn(name = "iduser")
 	private UserDTO user;
 	
 }
