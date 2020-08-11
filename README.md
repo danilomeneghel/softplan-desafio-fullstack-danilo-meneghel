@@ -96,9 +96,22 @@ http://sistema-processos.herokuapp.com/ <br>
     - Username: carlos
     - Password: carlos
 
+    - Username: catia
+    - Password: catia
+
+## Testes
+
+Para realizar os testes, crie o banco de dados com o nome "sistema-processos-test".
+Após feito isso, execute o seguinte comando no terminal:
+
+```
+$ mvn test
+```
+
 ## Licença
 
-Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.
+Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
+
 
 
 Desenvolvido por<br>
