@@ -25,3 +25,30 @@ app.config([
         $urlRouterProvider.otherwise('/users');
     }
 ]);
+
+app.controller("ModalController", function($scope, $uibModal) {
+    var modalInstance;
+    $scope.openModal = function(id) {
+        var data;
+        if(id != undefined && id != null)
+            data = $scope.editUser(id);
+        else
+            data = $scope.reset();
+        
+        modalInstance = $uibModal.open({
+            scope: $scope,
+            animation: false,
+            templateUrl: 'partials/userForm',
+            controller: 'UserController',
+            size: 'md',
+            resolve: {
+                items: function() {
+                    return data;
+                }
+            }
+        });
+    };
+    $scope.cancel = function () {
+        modalInstance.close("closed result");
+    };
+});

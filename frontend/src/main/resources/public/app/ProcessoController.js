@@ -4,8 +4,6 @@ angular.module('processoApp').controller('ProcessoController', [
     'ProcessoService', '$scope', function (ProcessoService, $scope) {
         var self = this;
         self.processo = {};
-        self.processos = [];
-        self.parecer = {};
 
         self.submitProcesso = submitProcesso;
         self.getAllProcessos = getAllProcessos;
@@ -13,14 +11,14 @@ angular.module('processoApp').controller('ProcessoController', [
         self.createProcesso = createProcesso;
         self.updateProcesso = updateProcesso;
         self.removeProcesso = removeProcesso;
-        self.editProcesso = editProcesso;
-        self.processoParecer = processoParecer;
-        self.reset = reset;
+
+        $scope.editProcesso = editProcesso;
+        $scope.reset = reset;
 		
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
-
+        
         function submitProcesso() {
             if (self.processo.id === undefined || self.processo.id === null) {
                 console.log('Criando novo processo', self.processo);
@@ -32,62 +30,49 @@ angular.module('processoApp').controller('ProcessoController', [
         }
         
         function createProcesso(processo) {
-            processo.users = [];
-            Object.values(processo.finalizadores).forEach(id => {
-                var user = {id:null};
-                user.id = id;
-                processo.users.push(user);
-            });
-
-            ProcessoService.createProcesso(processo).then(
-                function (response) {
-                    console.log('Processo criado com sucesso!');
-                    console.log(processo);
-
-                    self.successMessage = 'Processo criado com sucesso!';
-                    self.errorMessage = '';
-                    self.done = true;
-                    self.processo = {};
-                    $scope.processoForm.$setPristine();
-                },
-                function (errResponse) {
-                    console.error('Erro ao criar processo');
-                    self.errorMessage = 'Erro ao criar processo: ' + errResponse.data.errorMessage;
-                    self.successMessage = '';
-                }
-            );
+            if(finalizadores(processo)) {
+                ProcessoService.createProcesso(processo).then(
+                    function (response) {
+                        console.log('Processo criado com sucesso!');
+                        console.log(processo);
+                        self.errorMessage = '';
+                        self.successMessage = 'Processo criado com sucesso!';
+                        self.done = true;
+                        self.processo = {};
+                    },
+                    function (errResponse) {
+                        console.error('Erro ao criar processo');
+                        self.successMessage = '';
+                        self.errorMessage = 'Erro ao criar processo: ' + errResponse.data.errorMessage;
+                    }
+                );
+            }
         }
 
         function updateProcesso(processo, id) {
-            processo.users = [];
-            Object.values(processo.finalizadores).forEach(id => {
-                var user = {id:null};
-                user.id = id;
-                processo.users.push(user);
-            });
-            
-            ProcessoService.updateProcesso(processo, id).then(
-                function (response) {
-                    console.log('Processo atualizado com sucesso');
-                    self.successMessage = 'Processo atualizado com sucesso';
-                    self.errorMessage = '';
-                    self.done = true;
-                    $scope.processoForm.$setPristine();
-                },
-                function (errResponse) {
-                    console.error('Erro ao atualizar processo');
-                    self.errorMessage = 'Erro ao atualizar processo ' + errResponse.data;
-                    self.successMessage = '';
-                }
-            );
+            if(finalizadores(processo)) {
+                ProcessoService.updateProcesso(processo, id).then(
+                    function (response) {
+                        console.log('Processo atualizado com sucesso');
+                        self.errorMessage = '';
+                        self.successMessage = 'Processo atualizado com sucesso';
+                        self.done = true;
+                    },
+                    function (errResponse) {
+                        console.error('Erro ao atualizar processo');
+                        self.successMessage = '';
+                        self.errorMessage = 'Erro ao atualizar processo ' + errResponse.data;
+                    }
+                );
+            }
         }
 
         function removeProcesso(id) {
             ProcessoService.removeProcesso(id).then(
                 function () {
                     console.log('Processo ' + id + ' removida com sucesso');
-                    self.successMessage = 'Processo removida com sucesso!';
                     self.errorMessage = '';
+                    self.successMessage = 'Processo removida com sucesso!';
                 },
                 function (errResponse) {
                     console.error('Erro ao remover processo ' + id + ', Erro :' + errResponse.data);
@@ -111,20 +96,7 @@ angular.module('processoApp').controller('ProcessoController', [
                     self.processo = processo;
                 },
                 function (errResponse) {
-                    console.error('Erro ao editar processo ' + id + ', Erro :' + errResponse.data);
-                }
-            );
-        }
-        
-        function processoParecer(id) {
-        	self.successMessage = '';
-            self.errorMessage = '';
-            ProcessoService.getProcesso(id).then(
-                function (response) {
-                    self.processo = response;
-                },
-                function (errResponse) {
-                    console.error('Erro ao localizar processo ' + id + ', Erro :' + errResponse.data);
+                    console.error('Erro ao enviar o processo ' + id + ', Erro :' + errResponse.data);
                 }
             );
         }
@@ -133,7 +105,22 @@ angular.module('processoApp').controller('ProcessoController', [
             self.successMessage = '';
             self.errorMessage = '';
             self.processo = {};
-            $scope.processoForm.$setPristine();
         }
-        		
+        
+        function finalizadores(processo) {
+            processo.users = [];
+            if(processo.finalizadores != null) {
+                Object.values(processo.finalizadores).forEach(id => {
+                    var user = {id:null};
+                    user.id = id;
+                    processo.users.push(user);
+                });
+                return processo.users;
+            } else {
+                self.successMessage = '';
+                self.errorMessage = 'É necessário selecionar ao menos um finalizador';
+                return false;
+            }
+        }
+
     }]);

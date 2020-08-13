@@ -3,17 +3,15 @@
 angular.module('parecerApp').controller('ParecerController', [
     'ParecerService', '$scope', function (ParecerService, $scope) {
         var self = this;
-        self.parecer = {};
-        self.pareceres = [];
-        self.parecer = {};
+        self.processo = {};
 
         self.submitParecer = submitParecer;
         self.getAllProcessoParecer = getAllProcessoParecer;
         self.createParecer = createParecer;
         self.updateParecer = updateParecer;
-        self.enviarParecer = enviarParecer;
-        self.processoParecer = processoParecer;
-        self.reset = reset;
+
+        $scope.enviarParecer = enviarParecer;
+        $scope.reset = reset;
 		
         self.successMessage = '';
         self.errorMessage = '';
@@ -33,16 +31,15 @@ angular.module('parecerApp').controller('ParecerController', [
             ParecerService.createParecer(processo).then(
                 function (response) {
                     console.log('Parecer criado com sucesso!');
-                    self.successMessage = 'Parecer criado com sucesso!';
                     self.errorMessage = '';
+                    self.successMessage = 'Parecer criado com sucesso!';
                     self.done = true;
-                    self.parecer = {};
-                    $scope.parecerForm.$setPristine();
+                    self.processo = {};
                 },
                 function (errResponse) {
                     console.error('Erro ao criar parecer');
-                    self.errorMessage = 'Erro ao criar parecer: ' + errResponse.data.errorMessage;
                     self.successMessage = '';
+                    self.errorMessage = 'Erro ao criar parecer: ' + errResponse.data.errorMessage;
                 }
             );
         }
@@ -51,15 +48,14 @@ angular.module('parecerApp').controller('ParecerController', [
             ParecerService.updateParecer(processo, id).then(
                 function (response) {
                     console.log('Parecer atualizado com sucesso');
-                    self.successMessage = 'Parecer atualizado com sucesso';
                     self.errorMessage = '';
+                    self.successMessage = 'Parecer atualizado com sucesso';
                     self.done = true;
-                    $scope.parecerForm.$setPristine();
                 },
                 function (errResponse) {
                     console.error('Erro ao atualizar parecer');
-                    self.errorMessage = 'Erro ao atualizar parecer ' + errResponse.data;
                     self.successMessage = '';
+                    self.errorMessage = 'Erro ao atualizar parecer ' + errResponse.data;
                 }
             );
         }
@@ -68,7 +64,7 @@ angular.module('parecerApp').controller('ParecerController', [
             return ParecerService.getAllProcessoParecer();
         }
         
-        function processoParecer(id) {
+        function enviarParecer(id) {
             self.successMessage = '';
             self.errorMessage = '';
             ParecerService.getProcesso(id).then(
@@ -76,19 +72,15 @@ angular.module('parecerApp').controller('ParecerController', [
                     self.processo = processo;
                 },
                 function (errResponse) {
-                    console.error('Erro ao editar processo ' + id + ', Erro :' + errResponse.data);
+                    console.error('Erro ao enviar o parecer ' + id + ', Erro :' + errResponse.data);
                 }
             );
         }
-
-        function enviarParecer(id) {
-            processoParecer(id);
-        }
         
-        function reset(id) {
+        function reset() {
             self.successMessage = '';
             self.errorMessage = '';
-            $scope.parecerForm.$setPristine();
+            self.processo = {};
         }
         
     }]);

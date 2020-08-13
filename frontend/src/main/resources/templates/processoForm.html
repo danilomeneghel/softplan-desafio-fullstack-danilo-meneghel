@@ -1,0 +1,47 @@
+<div class="modal-dialog modal-md">
+	<div class="modal-header">
+		<h3 class="modal-title">{{!ctrl.processo.id ? 'Adicionar' : 'Editar'}} Processo</h3>
+		<button type="button" class="close" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body panel-default">
+		<div class="panel-body">
+			<div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+			<div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+			<form ng-submit="ctrl.submitProcesso()" name="processoForm" class="form-horizontal">
+				<input type="hidden" ng-model="ctrl.processo.id" />
+				<div class="form-panel">
+					<div class="form-group">
+						<input type="text" ng-model="ctrl.processo.titulo" name="titulo" class="form-control" placeholder="Título" />
+					</div>
+					<div class="form-group">
+						<textarea ng-model="ctrl.processo.descricao" name="descricao" class="form-control" placeholder="Descrição" rows="5"></textarea>
+					</div>
+					<div class="form-group">
+						<select multiple ng-model="ctrl.processo.finalizadores" name="finalizadores" class="form-control">
+							<option value="" disabled="disabled">Finalizador(es)</option>
+							<option ng-repeat="user in ctrl.getAllUsers()" value="{{user.id}}">{{user.name}}</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<select ng-model="ctrl.processo.status" name="status" class="form-control">
+							<option value="ABERTO">Aberto</option>
+							<option value="FECHADO">Fechado</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-actions float-left">
+						<button type="submit" class="btn btn-success" ng-disabled="processoForm.$invalid || processoForm.$pristine">
+							<i class="fa fa-hdd-o"></i> {{!ctrl.processo.id ? 'Adicionar' : 'Editar'}}
+						</button>
+						<button type="button" ng-click="ctrl.reset()" class="btn btn-default" ng-disabled="processoForm.$pristine">
+							<i class="fa fa-eraser"></i> Limpar
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>	
+	</div>
+</div>

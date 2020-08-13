@@ -6,7 +6,10 @@
     <body>
         <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-        <div ui-view></div>
+        <div class="container-fluid">
+            <h2>Pareceres</h2>
+            <div ui-view></div>
+        </div>
 
         <script type="text/javascript" th:src="@{/app/ParecerApp.js}"></script>
         <script type="text/javascript" th:src="@{/app/ParecerService.js}"></script>

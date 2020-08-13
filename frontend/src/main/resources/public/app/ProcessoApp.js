@@ -28,3 +28,29 @@ app.config([
         $urlRouterProvider.otherwise('/processos');
     }
 ]);
+
+app.controller("ModalController", function($scope, $uibModal) {
+    var modalInstance;
+    $scope.openModal = function(id) {
+        var data;
+        if(id != undefined && id != null)
+            data = $scope.editProcesso(id);
+        else
+            data = $scope.reset();
+        
+        modalInstance = $uibModal.open({
+            scope: $scope,
+            templateUrl: 'partials/processoForm',
+            controller: 'ProcessoController',
+            size: 'md',
+            resolve: {
+                items: function() {
+                    return data;
+                }
+            }
+        });
+    };
+    $scope.cancel = function () {
+        modalInstance.close("closed result");
+    };
+});

@@ -1,5 +1,4 @@
-<div class="container-fluid">
-    <h2>Pareceres</h2>
+<div class="panel">
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -29,7 +28,7 @@
                         <td>{{processo.status}}</td>
                         <td>{{processo.pareceres[0].updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-click="ctrl.enviarParecer(processo.id)" class="btn btn-primary" data-toggle="modal" data-target="#parecer"><i class="fa fa-edit"></i> Enviar Parecer</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-controller="ModalController" ng-click="openModal(processo.id)" class="btn btn-primary"><i class="fa fa-edit"></i> Enviar Parecer</a>
                         </td>
                     </tr>
                 </tbody>
@@ -44,42 +43,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" id="parecer" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        	<div class="modal-header">
-                <h3 class="modal-title">{{!ctrl.pareceres[0].id ? 'Adicionar' : 'Editar'}} Parecer</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="panel panel-default">
-		        <div class="panel-body">
-		            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
-		            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
-		            <form ng-submit="ctrl.submitParecer()" name="parecerForm" class="form-horizontal">
-		                <input type="hidden" ng-model="ctrl.processo.pareceres[0].id" />
-		                <div class="form-panel">
-		                    <div class="form-group">
-		                        <textarea ng-model="ctrl.processo.pareceres[0].comentario" name="comentario" class="form-control" placeholder="Comentário" rows="5"></textarea>
-		                    </div>
-		                </div>
-		                <div class="row">
-		                    <div class="form-actions float-left">
-		                        <button type="submit" class="btn btn-success" ng-disabled="parecerForm.$invalid || parecerForm.$pristine">
-		                            <i class="fa fa-hdd-o"></i> {{!ctrl.pareceres[0].id ? 'Adicionar' : 'Editar'}}
-		                        </button>
-		                        <button type="button" ng-click="ctrl.reset(ctrl.processo.pareceres[0].id)" class="btn btn-default" ng-disabled="parecerForm.$pristine">
-		                            <i class="fa fa-eraser"></i> Limpar
-		                        </button>
-		                    </div>
-		                </div>
-		            </form>
-		        </div>	
-	        </div>
-    	</div>
     </div>
 </div>

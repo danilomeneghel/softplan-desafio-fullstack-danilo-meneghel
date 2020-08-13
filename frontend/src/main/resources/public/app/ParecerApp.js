@@ -27,3 +27,30 @@ app.config([
         $urlRouterProvider.otherwise('/pareceres');
     }
 ]);
+
+app.controller("ModalController", function($scope, $uibModal) {
+    var modalInstance;
+    $scope.openModal = function(id) {
+        var data;
+        if(id != undefined && id != null)
+            data = $scope.enviarParecer(id);
+        else
+            data = $scope.reset();
+        
+        modalInstance = $uibModal.open({
+            scope: $scope,
+            animation: false,
+            templateUrl: 'partials/parecerForm',
+            controller: 'ParecerController',
+            size: 'md',
+            resolve: {
+                items: function() {
+                    return data;
+                }
+            }
+        });
+    };
+    $scope.cancel = function () {
+        modalInstance.close("closed result");
+    };
+});
