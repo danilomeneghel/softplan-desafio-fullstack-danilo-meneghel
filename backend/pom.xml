@@ -130,11 +130,12 @@
 				<appName>app-sistema-processos</appName>
 				<includeTarget>false</includeTarget>
 				<includes>
-					<include>${basedir}/${full-artifact-name}</include>
+					<include>${full-artifact-name}</include>
+					<include>${worker-full-artifact-name}</include>
 				</includes>
-				<jdkVersion>1.8</jdkVersion>
 				<processTypes>
 					<web>java $JAVA_OPTS -jar ${full-artifact-name}</web>
+					<worker>java $JAVA_OPTS -jar ${worker-full-artifact-name}</worker>
 				</processTypes>
 			</configuration>
 		</plugin>
