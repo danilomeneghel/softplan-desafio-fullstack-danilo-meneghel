@@ -1,1 +1,1 @@
-web: cd backend && java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
+web: cd backend && mvn package && java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar

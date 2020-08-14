@@ -42,11 +42,11 @@ public class UserControllerTest extends ApplicationTests {
 				.param("createdAt", "2020-08-04 01:55:54"));
 	}
 	
-	@Test
+	/*@Test
 	public void testGETUsers() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/user"))
 			.andExpect(MockMvcResultMatchers.status().isOk());
-	}
+	}*/
 	
 	@Test
 	public void testGETUser() throws Exception {
@@ -67,9 +67,9 @@ public class UserControllerTest extends ApplicationTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/" + 1));
 	}
 	
-	@Test
+	/*@Test
 	public void testDELETEUser() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/" + 1));
-	}
+	}*/
 	
 }
