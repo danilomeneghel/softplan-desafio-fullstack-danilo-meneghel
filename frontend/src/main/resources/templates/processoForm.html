@@ -13,13 +13,13 @@
 				<input type="hidden" ng-model="ctrl.processo.id" />
 				<div class="form-panel">
 					<div class="form-group">
-						<input type="text" ng-model="ctrl.processo.titulo" name="titulo" class="form-control" placeholder="Título" />
+						<input type="text" ng-model="ctrl.processo.titulo" name="titulo" class="form-control" placeholder="Título" required />
 					</div>
 					<div class="form-group">
 						<textarea ng-model="ctrl.processo.descricao" name="descricao" class="form-control" placeholder="Descrição" rows="5"></textarea>
 					</div>
 					<div class="form-group">
-						<select multiple ng-model="ctrl.finalizadores" name="finalizadores" class="form-control">
+						<select multiple ng-model="ctrl.processo.finalizadores" name="finalizadores" class="form-control">
 							<option value="" disabled="disabled">Finalizador(es)</option>
 							<option ng-repeat="user in ctrl.getAllFinalizadores()" value="{{user.id}}">{{user.name}}</option>
 						</select>
