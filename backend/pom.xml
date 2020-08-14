@@ -22,7 +22,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
 	</properties>
 
 	<dependencies>
@@ -122,23 +121,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<plugin>
-			<groupId>app</groupId>
-			<artifactId>heroku-maven-plugin</artifactId>
-			<version>1.1.1</version>
-			<configuration>
-				<appName>app-sistema-processos</appName>
-				<includeTarget>false</includeTarget>
-				<includes>
-					<include>${full-artifact-name}</include>
-					<include>${worker-full-artifact-name}</include>
-				</includes>
-				<processTypes>
-					<web>java $JAVA_OPTS -jar ${full-artifact-name}</web>
-					<worker>java $JAVA_OPTS -jar ${worker-full-artifact-name}</worker>
-				</processTypes>
-			</configuration>
-		</plugin>
 		<resources>
 			<resource>
 				<directory>${project.basedir}/../frontend/src/main/resources</directory>
