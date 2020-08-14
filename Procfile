@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar backend/target/*.jar
+web: heroku deploy:jar -j backend/target/*.jar -i Procfile --app
