@@ -124,7 +124,7 @@
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
-				<version>2.0.16</version>
+				<version>3.0.4</version>
 				<configuration>
 					<appName>app-sistema-processos</appName>
 					<includeTarget>false</includeTarget>
@@ -146,7 +146,14 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<sourceDirectory>src</sourceDirectory>
 		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
 			<resource>
 				<directory>${project.basedir}/../frontend/src/main/resources</directory>
 			</resource>
