@@ -5,12 +5,12 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>app</groupId>
-	<artifactId>app-sistema-processos</artifactId>
+	<artifactId>backend</artifactId>
 	<version>1.1</version>
 	<packaging>jar</packaging>
 
-	<name>app-sistema-processos</name>
-	<description>Sistema de Processos</description>
+	<name>sistema-processos</name>
+	<description>Sistema desenvolvido em Java com Spring-Boot e AngularJS</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

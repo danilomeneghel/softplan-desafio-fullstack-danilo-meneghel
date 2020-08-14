@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar backend/target/app-sistema-processos-1.1.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/app-sistema-processos-1.1.jar
