@@ -22,7 +22,7 @@ angular.module('parecerApp').controller('ParecerController', [
                 console.log('Criando novo parecer', self.processo);
                 createParecer(self.processo);
             } else {
-                console.log('Atualizando parecer com id ', self.processo.id);
+                console.log('Atualizando parecer com id ', self.processo.pareceres[0].id);
                 updateParecer(self.processo, self.processo.pareceres[0].id);
             }
         }
@@ -30,7 +30,7 @@ angular.module('parecerApp').controller('ParecerController', [
         function createParecer(processo) {
             ParecerService.createParecer(processo).then(
                 function (response) {
-                    console.log('Parecer criado com sucesso!');
+                    console.log('Parecer criado com sucesso!', response);
                     self.errorMessage = '';
                     self.successMessage = 'Parecer criado com sucesso!';
                     self.done = true;
@@ -47,7 +47,7 @@ angular.module('parecerApp').controller('ParecerController', [
         function updateParecer(processo, id) {
             ParecerService.updateParecer(processo, id).then(
                 function (response) {
-                    console.log('Parecer atualizado com sucesso');
+                    console.log('Parecer atualizado com sucesso', response);
                     self.errorMessage = '';
                     self.successMessage = 'Parecer atualizado com sucesso';
                     self.done = true;

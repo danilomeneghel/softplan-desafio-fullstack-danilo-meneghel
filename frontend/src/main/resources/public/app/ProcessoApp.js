@@ -20,7 +20,6 @@ app.config([
                 processos: function ($q, ProcessoService) {
                     var deferred = $q.defer();
                     ProcessoService.loadAllProcessos().then(deferred.resolve, deferred.resolve);
-                    ProcessoService.loadAllUsers().then(deferred.resolve, deferred.resolve);
                     return deferred.promise;
                 }
             }

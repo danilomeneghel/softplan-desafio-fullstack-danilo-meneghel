@@ -23,11 +23,6 @@ public class IndexController {
         return "processos";
     }
     
-    @RequestMapping("/processoForm")
-    public String processoForm() {
-        return "processoForm";
-    }
-    
     @RequestMapping("/pareceres")
     public String pareceres() {
     	return "pareceres";

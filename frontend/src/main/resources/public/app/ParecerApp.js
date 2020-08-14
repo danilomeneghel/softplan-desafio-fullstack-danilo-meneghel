@@ -31,11 +31,7 @@ app.config([
 app.controller("ModalController", function($scope, $uibModal) {
     var modalInstance;
     $scope.openModal = function(id) {
-        var data;
-        if(id != undefined && id != null)
-            data = $scope.enviarParecer(id);
-        else
-            data = $scope.reset();
+        var data = $scope.enviarParecer(id);
         
         modalInstance = $uibModal.open({
             scope: $scope,

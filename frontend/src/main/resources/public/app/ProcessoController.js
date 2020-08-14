@@ -33,8 +33,7 @@ angular.module('processoApp').controller('ProcessoController', [
             if(finalizadores(processo)) {
                 ProcessoService.createProcesso(processo).then(
                     function (response) {
-                        console.log('Processo criado com sucesso!');
-                        console.log(processo);
+                        console.log('Processo criado com sucesso!', response);
                         self.errorMessage = '';
                         self.successMessage = 'Processo criado com sucesso!';
                         self.done = true;
@@ -53,7 +52,7 @@ angular.module('processoApp').controller('ProcessoController', [
             if(finalizadores(processo)) {
                 ProcessoService.updateProcesso(processo, id).then(
                     function (response) {
-                        console.log('Processo atualizado com sucesso');
+                        console.log('Processo atualizado com sucesso', response);
                         self.errorMessage = '';
                         self.successMessage = 'Processo atualizado com sucesso';
                         self.done = true;

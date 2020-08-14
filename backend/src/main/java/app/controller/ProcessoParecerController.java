@@ -82,16 +82,18 @@ public class ProcessoParecerController {
 
 	@ApiOperation(value = "Atualiza o Parecer")
 	@RequestMapping(value = "/processo-parecer/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody Processo processo) {
-		if (parecerService.findParecerById(id) == null) {
+	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody Parecer parecer) {
+		Parecer p = parecerService.findParecerById(id);
+		if (p == null) {
 			logger.error("Não é possível atualizar. Parecer com id {} não encontrado.", id);
 			return new ResponseEntity<Object>(
 					new CustomErrorType("Não é possível atualizar. Parecer com id " + id + " não encontrado."),
 					HttpStatus.NOT_FOUND);
 		}
 
-		processoService.save(processo);
-		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
+		p.setComentario(parecer.getComentario());
+		parecerService.save(p);
+		return new ResponseEntity<Parecer>(parecer, HttpStatus.OK);
 	}
 
 }

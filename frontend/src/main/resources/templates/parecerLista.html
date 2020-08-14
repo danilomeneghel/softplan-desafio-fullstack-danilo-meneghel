@@ -28,7 +28,8 @@
                         <td>{{processo.status}}</td>
                         <td>{{processo.pareceres[0].updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-controller="ModalController" ng-click="openModal(processo.id)" class="btn btn-primary"><i class="fa fa-edit"></i> Enviar Parecer</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-controller="ModalController" 
+                            ng-click="openModal(processo.id)" class="btn btn-primary"><i class="fa fa-edit"></i> Enviar Parecer</a>
                         </td>
                     </tr>
                 </tbody>
@@ -39,7 +40,7 @@
                 </div>
                 <div class="pagination-right">
                     <uib-pagination class="pagination-sm pagination" total-items="filterData.length" ng-model="page"
-                                    previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=5></uib-pagination>
+                        previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=5></uib-pagination>
                 </div>
             </div>
         </div>

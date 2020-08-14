@@ -31,7 +31,7 @@ angular.module('userApp').controller('UserController', [
         function createUser(user) {
             UserService.createUser(user).then(
                 function (response) {
-                    console.log('Usuário criado com sucesso!');
+                    console.log('Usuário criado com sucesso!', response);
                     self.errorMessage = '';
                     self.successMessage = 'Usuário criado com sucesso!';
                     self.done = true;

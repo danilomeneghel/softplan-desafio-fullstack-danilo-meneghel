@@ -19,8 +19,6 @@ angular.module('parecerApp').factory('ParecerService', [
                 function (response) {
                     if(response.length > 0) {
                         delete response.data[0].users;
-                        if(response.data[0].pareceres.length == 0)
-                            response.data[0].pareceres = [{id:'', comentario:''}];
                     }
                     console.log('Processo e Parecer carregados com sucesso', response.data);
                     $localStorage.pareceres = response.data;
@@ -74,7 +72,7 @@ angular.module('parecerApp').factory('ParecerService', [
 
         function updateParecer(processo, id) {
             var deferred = $q.defer();
-            $http.put(urls.PROCESSOPARECER_SERVICE_API + "/" + id, processo).then(
+            $http.put(urls.PROCESSOPARECER_SERVICE_API + "/" + id, processo.pareceres[0]).then(
                 function (response) {
                     loadAllProcessoParecer();
                     deferred.resolve(response.data);
