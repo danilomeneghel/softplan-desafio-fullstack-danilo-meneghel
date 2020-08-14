@@ -14,6 +14,7 @@ angular.module('parecerApp').factory('ParecerService', [
         return factory;
 
         function loadAllProcessoParecer() {
+            $localStorage.pareceres = "";
             var deferred = $q.defer();
             $http.get(urls.PROCESSOPARECER_SERVICE_API).then(
                 function (response) {
@@ -37,7 +38,6 @@ angular.module('parecerApp').factory('ParecerService', [
         }
 
         function getProcesso(id) {
-            $localStorage.parecer = "";
             $localStorage.processo = "";
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
@@ -45,10 +45,11 @@ angular.module('parecerApp').factory('ParecerService', [
                     delete response.data.users;
                     console.log('Processo carregado com id :' + id);
                     console.log(response);
+                    $localStorage.processo = response;
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao carregar a parecer com o id :' + id);
+                    console.error('Erro ao carregar processo com o id :' + id);
                     deferred.reject(errResponse);
                 }
             );

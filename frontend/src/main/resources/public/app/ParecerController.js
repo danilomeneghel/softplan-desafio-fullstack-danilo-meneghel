@@ -72,7 +72,7 @@ angular.module('parecerApp').controller('ParecerController', [
                     self.processo = processo;
                 },
                 function (errResponse) {
-                    console.error('Erro ao enviar o parecer ' + id + ', Erro :' + errResponse.data);
+                    console.error('Erro ao carregar parecer com ' + id + ', Erro :' + errResponse.data);
                 }
             );
         }

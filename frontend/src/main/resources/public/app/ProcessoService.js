@@ -5,9 +5,9 @@ angular.module('processoApp').factory('ProcessoService', [
     function ($localStorage, $http, $q, urls) {
         var factory = {
             loadAllProcessos: loadAllProcessos,
-            loadAllUsers: loadAllUsers,
+            loadAllFinalizadores: loadAllFinalizadores,
             getAllProcessos: getAllProcessos,
-            getAllUsers: getAllUsers,
+            getAllFinalizadores: getAllFinalizadores,
             getProcesso: getProcesso,
             createProcesso: createProcesso,
             updateProcesso: updateProcesso,
@@ -17,6 +17,7 @@ angular.module('processoApp').factory('ProcessoService', [
         return factory;
 
         function loadAllProcessos() {
+            $localStorage.processos = "";
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API).then(
                 function (response) {
@@ -32,43 +33,44 @@ angular.module('processoApp').factory('ProcessoService', [
             return deferred.promise;
         }
         
-        function loadAllUsers() {
+        function loadAllFinalizadores() {
+            $localStorage.finalizadores = "";
             var deferred = $q.defer();
             $http.get(urls.FINALIZADOR_SERVICE_API).then(
                 function (response) {
-                    console.log('Usuários carregado com sucesso', response.data);
-                    $localStorage.users = response.data;
+                    console.log('Finalizadores carregados com sucesso', response.data);
+                    $localStorage.finalizadores = response.data;
                     deferred.resolve(response);
                 },
                 function (errResponse) {
-                    console.error('Erro ao carregar users');
+                    console.error('Erro ao carregar finalizadores');
                     deferred.reject(errResponse);
                 }
             );
             return deferred.promise;
         }
-
-        function getAllUsers() {
-            return $localStorage.users;
-        }
-                
+        
         function getAllProcessos() {
             return $localStorage.processos;
         }
         
+        function getAllFinalizadores() {
+            return $localStorage.finalizadores;
+        }
+
         function getProcesso(id) {
             $localStorage.processo = "";
-            $localStorage.parecer = "";
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
                 function (response) {
+                    delete response.data.users;
                     console.log('Processo carregado com id :' + id);
                     console.log(response);
                     $localStorage.processo = response;
                     deferred.resolve(response.data);
                 },
                 function (errResponse) {
-                    console.error('Erro ao carregar a processo com o id :' + id);
+                    console.error('Erro ao carregar processo com o id :' + id);
                     deferred.reject(errResponse);
                 }
             );

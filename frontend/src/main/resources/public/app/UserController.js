@@ -86,7 +86,7 @@ angular.module('userApp').controller('UserController', [
                     self.user = user;
                 },
                 function (errResponse) {
-                    console.error('Erro enviar o usuário ' + id + ', Erro :' + errResponse.data);
+                    console.error('Erro carregar usuário com ' + id + ', Erro :' + errResponse.data);
                 }
             );
         }

@@ -15,6 +15,7 @@ angular.module('userApp').factory('UserService', [
         return factory;
 
         function loadAllUsers() {
+            $localStorage.users = "";
             var deferred = $q.defer();
             $http.get(urls.USER_SERVICE_API).then(
                 function (response) {

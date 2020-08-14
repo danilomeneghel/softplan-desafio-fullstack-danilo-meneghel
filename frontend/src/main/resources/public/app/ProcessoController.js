@@ -7,7 +7,7 @@ angular.module('processoApp').controller('ProcessoController', [
 
         self.submitProcesso = submitProcesso;
         self.getAllProcessos = getAllProcessos;
-        self.getAllUsers = getAllUsers;
+        self.getAllFinalizadores = getAllFinalizadores;
         self.createProcesso = createProcesso;
         self.updateProcesso = updateProcesso;
         self.removeProcesso = removeProcesso;
@@ -83,8 +83,8 @@ angular.module('processoApp').controller('ProcessoController', [
             return ProcessoService.getAllProcessos();
         }
         
-        function getAllUsers() {
-            return ProcessoService.getAllUsers();
+        function getAllFinalizadores() {
+            return ProcessoService.getAllFinalizadores();
         }
 
         function editProcesso(id) {
@@ -95,7 +95,7 @@ angular.module('processoApp').controller('ProcessoController', [
                     self.processo = processo;
                 },
                 function (errResponse) {
-                    console.error('Erro ao enviar o processo ' + id + ', Erro :' + errResponse.data);
+                    console.error('Erro ao carregar processo com ' + id + ', Erro :' + errResponse.data);
                 }
             );
         }
