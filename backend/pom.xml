@@ -113,11 +113,6 @@
 			<artifactId>nekohtml</artifactId>
 			<version>1.9.22</version>                                 
 		</dependency>
-		<dependency>
-			<groupId>com.heroku.sdk</groupId>
-			<artifactId>heroku-maven-plugin</artifactId>
-			<version>3.0.4</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -125,30 +120,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>3.0.4</version>
-				<configuration>
-					<appName>app-sistema-processos</appName>
-					<includeTarget>false</includeTarget>
-					<includes>
-						<include>${basedir}/${full-artifact-name}</include>
-					</includes>
-					<jdkVersion>1.8</jdkVersion>
-					<processTypes>
-						<web>java $JAVA_OPTS -jar ${full-artifact-name}</web>
-					</processTypes>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<resources>
