@@ -14,7 +14,7 @@ import app.service.UserService;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan
+@ComponentScan("app")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

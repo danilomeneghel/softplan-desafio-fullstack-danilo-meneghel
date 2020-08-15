@@ -46,7 +46,7 @@ https://github.com/g-cpa-squad-produto/softplan-desafio-fullstack
 ```
 $ git clone https://github.com/danilomeneghel/softplan-desafio-fullstack-danilo-meneghel.git
 
-$ cd softplan-desafio-fullstack-danilo-meneghel/backend
+$ cd softplan-desafio-fullstack-danilo-meneghel/
 ```
 
 Crie o banco de dados com o nome sistema-processos em seu PostgreSQL.
