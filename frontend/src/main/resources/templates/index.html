@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
-    </head>    
+    <head th:include="fragments/headerinc :: head"></head>
     <body>
-        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+        <div th:include="fragments/header :: header"></div>
         <div class="container-fluid">
             <div class="text-center">
                 <h2 th:inline="text">Bem-vindo, [[${#httpServletRequest.remoteUser}]]!</h2>
