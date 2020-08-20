@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="user")
+@Entity
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {

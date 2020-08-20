@@ -22,7 +22,7 @@ import java.util.List;
 
 import app.dto.UserDTO;
 
-@Entity(name="processo")
+@Entity
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")

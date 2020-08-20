@@ -19,7 +19,7 @@ import javax.persistence.*;
 
 import app.dto.UserDTO;
 
-@Entity(name="parecer")
+@Entity
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")

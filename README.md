@@ -1,6 +1,6 @@
 # Sistema de Processos
 
-Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring-Boot.
+Avaliação técnica de um Sistema de Processos, desenvolvido em Java com Spring-Boot e AngularJS.
 
 Descrição da prova:
 
@@ -21,7 +21,7 @@ https://github.com/g-cpa-squad-produto/softplan-desafio-fullstack
 
 ## Requisitos
 
-- Java JDK 1.8
+- Java JDK 14
 - Apache Maven >= 3.6.3
 - PostgreSQL >= 12
 - Docker (Opcional)

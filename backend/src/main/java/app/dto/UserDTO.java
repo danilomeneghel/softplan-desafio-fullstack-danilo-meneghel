@@ -15,7 +15,7 @@ import java.util.List;
 
 import app.entity.Processo;
 
-@Entity(name="user")
+@Entity
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDTO {

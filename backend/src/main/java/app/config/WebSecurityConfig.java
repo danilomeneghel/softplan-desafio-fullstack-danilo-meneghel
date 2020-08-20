@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests().antMatchers("/login", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.eot", "/**/*.ttf", 
-            "/**/*.woff", "/**/*.woff2", "/images/**", "/fonts/**", "/swagger-ui.html/**", "/swagger-resources/**", "/api/**", "/cadastro/**", "/salvarCadastro").permitAll() 
+            "/**/*.woff", "/**/*.woff2", "/images/**", "/fonts/**", "/swagger-ui.html/**", "/swagger**", "/api/**", "/cadastro/**", "/salvarCadastro").permitAll() 
             .and()
             .csrf().disable()
             .authorizeRequests()
