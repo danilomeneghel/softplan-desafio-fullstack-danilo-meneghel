@@ -20,6 +20,8 @@
                         <th>ID</th>
                         <th>Título</th>
                         <th sec:authorize="hasAuthority('ADMIN')">Criador</th>
+                        <th>Finalizador(es)</th>
+                        <th>Parecer</th>
                         <th>Status</th>
                         <th>Data Criada</th>
                         <th class="text-center">Ações</th>
@@ -30,6 +32,8 @@
                         <td>{{processo.id}}</td>
                         <td>{{processo.titulo}}</td>
                         <td sec:authorize="hasAuthority('ADMIN')">{{processo.criador.name}}</td>
+                        <td><span ng-repeat="finalizador in processo.users">{{finalizador.name}}; </span></td>
+                        <td>{{processo.pareceres[0].comentario}}</td>
                         <td>{{processo.status}}</td>
                         <td>{{processo.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">

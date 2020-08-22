@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-md">
     <div class="modal-header">
-        <h3 class="modal-title">{{!ctrl.pareceres[0].comentario ? 'Adicionar' : 'Editar'}} Parecer</h3>
+        <h3 class="modal-title">Enviar Parecer</h3>
         <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="form-actions float-left">
                         <button type="submit" class="btn btn-success" ng-disabled="parecerForm.$invalid || parecerForm.$pristine">
-                            <i class="fa fa-hdd-o"></i> {{!ctrl.pareceres[0].comentario ? 'Adicionar' : 'Editar'}}
+                            <i class="fa fa-hdd-o"></i> Enviar
                         </button>
                         <button type="button" ng-click="ctrl.reset(ctrl.processo.pareceres[0].id)" class="btn btn-default" ng-disabled="parecerForm.$pristine">
                             <i class="fa fa-eraser"></i> Limpar

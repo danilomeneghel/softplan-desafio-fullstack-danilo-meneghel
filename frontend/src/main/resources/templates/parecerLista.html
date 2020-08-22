@@ -14,6 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Processo</th>
+                        <th>Criador</th>
                         <th>Comentário</th>
                         <th>Status</th>
                         <th>Data Parecer</th>
@@ -24,6 +25,7 @@
                     <tr ng-repeat="processo in filterData = (ctrl.getAllProcessoParecer()| filter: pesquisar) | limitTo: 5:5*(page-1)">
                         <td>{{processo.id}}</td>
                         <td>{{processo.titulo}}</td>
+                        <td>{{processo.criador.name}}</td>
                         <td>{{processo.pareceres[0].comentario}}</td>
                         <td>{{processo.status}}</td>
                         <td>{{processo.pareceres[0].updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
