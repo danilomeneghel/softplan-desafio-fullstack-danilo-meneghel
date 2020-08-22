@@ -16,13 +16,13 @@ import java.util.List;
 import app.entity.Processo;
 
 @Entity
+@Table(name = "user")
 @Getter @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDTO {
 
 	@Id
-	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "iduser", unique = true, nullable = false)
 	private Long id;
 
 	private String name;
@@ -49,7 +49,7 @@ public class UserDTO {
 		this.role = role;
 	}
 
-	@OneToMany(mappedBy = "criador")
+	@OneToMany(mappedBy = "criador", cascade = CascadeType.ALL)
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@JsonIgnore
     private List<Processo> processos;

@@ -2,7 +2,6 @@ package app.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.EqualsAndHashCode;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,20 +13,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 @Getter @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
 	@Id
-	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "iduser", unique = true, nullable = false)
 	private Long id;
 
 	@Size(min = 3, max = 100)
@@ -37,6 +35,7 @@ public class User {
 	private String email;
 
 	@Size(min = 3, max = 50)
+	@Column(unique = true)
 	private String username;
 
 	@Size(min = 4, max = 80)
