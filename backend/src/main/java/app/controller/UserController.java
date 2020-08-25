@@ -2,6 +2,7 @@ package app.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,14 +51,18 @@ public class UserController {
 	
 	@ApiOperation(value = "Lista todos os Finalizadores")
 	@RequestMapping(value = "/finalizador", method = RequestMethod.GET)
-	public ResponseEntity<List<User>> listAllFinalizadores() {
-		List<User> users = userService.findAllByRoleOrderByUsernameAsc("FINAL");
+	public ResponseEntity<List<UserDTO>> listAllFinalizadores() {
+		List<User> users = userService.findAllByRoleOrderByNameAsc("FINAL");
 		if (users.isEmpty())
-			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
 		
-		//Muda valor da senha para não ser mostrada
-		users.forEach(user -> user.setPassword(null));		
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		//Cria uma nova lista de objetos com apenas os dados necessários do Usuário
+		List<UserDTO> userDTO = new ArrayList<UserDTO>();
+		for(User user : users) {
+			userDTO.add(new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getRole()));
+		}
+
+		return new ResponseEntity<List<UserDTO>>(userDTO, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Pega um Usuário")

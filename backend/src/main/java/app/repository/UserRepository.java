@@ -1,6 +1,7 @@
 package app.repository;
 
 import app.entity.User;
+import app.dto.UserDTO;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,6 +13,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByName(String name);
     User findByUsername(String username);
     List<User> findAllByOrderByNameAsc();
-    List<User> findAllByRoleOrderByUsernameAsc(String role);
+    List<User> findAllByRoleOrderByNameAsc(String role);
 
 }

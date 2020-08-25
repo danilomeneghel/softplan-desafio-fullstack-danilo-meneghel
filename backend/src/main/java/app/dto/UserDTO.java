@@ -33,16 +33,8 @@ public class UserDTO {
 
 	public UserDTO() {}
 	
-	public UserDTO(Long id) {
-		this.id = id;
-	}
-	
-	public UserDTO(Long id, String username) {
-		this.id = id;
-		this.username = username;
-	}
-	
 	public UserDTO(Long id, String name, String username, String role) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
