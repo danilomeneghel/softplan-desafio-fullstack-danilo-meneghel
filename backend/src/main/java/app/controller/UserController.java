@@ -39,8 +39,6 @@ public class UserController {
 		if (users.isEmpty())
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
 		
-		//Muda valor da senha para não ser mostrada
-		users.forEach(user -> user.setPassword(null));		
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 	
@@ -68,8 +66,6 @@ public class UserController {
 			return new ResponseEntity<Object>(new CustomErrorType("Usuário com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 
-		//Muda valor da senha para não ser mostrada
-		user.setPassword(null);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
@@ -81,8 +77,6 @@ public class UserController {
 			return new ResponseEntity<Object>(new CustomErrorType("Usuário não encontrado."), HttpStatus.NOT_FOUND);
 		}
 
-		//Muda valor da senha para não ser mostrada
-		user.setPassword(null);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 

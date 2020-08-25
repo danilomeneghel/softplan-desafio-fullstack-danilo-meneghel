@@ -38,9 +38,11 @@ public class User {
 	@Column(unique = true)
 	private String username;
 
+	@JsonIgnore
 	@Size(min = 4, max = 80)
 	private String password;
 
+	@JsonIgnore
 	@Transient
 	@Size(min = 4, max = 80)
 	private String passwordCheck;
