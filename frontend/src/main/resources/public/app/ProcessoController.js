@@ -69,9 +69,9 @@ angular.module('processoApp').controller('ProcessoController', [
         function removeProcesso(id) {
             ProcessoService.removeProcesso(id).then(
                 function () {
-                    console.log('Processo ' + id + ' removida com sucesso');
+                    console.log('Processo ' + id + ' removido com sucesso');
                     self.errorMessage = '';
-                    self.successMessage = 'Processo removida com sucesso!';
+                    self.successMessage = 'Processo removido com sucesso!';
                 },
                 function (errResponse) {
                     console.error('Erro ao remover processo ' + id + ', Erro :' + errResponse.data);
@@ -107,19 +107,12 @@ angular.module('processoApp').controller('ProcessoController', [
         }
         
         function finalizadores(processo) {
-            processo.users = [];
-            if(processo.finalizadores != null) {
-                Object.values(processo.finalizadores).forEach(id => {
-                    var user = {id:null};
-                    user.id = id;
-                    processo.users.push(user);
-                });
-                return processo.users;
-            } else {
+            if(processo.users == null) {
                 self.successMessage = '';
                 self.errorMessage = 'É necessário selecionar ao menos um finalizador';
                 return false;
-            }
+            } 
+            return processo.users;
         }
-
+        
     }]);

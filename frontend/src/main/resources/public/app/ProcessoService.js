@@ -34,12 +34,12 @@ angular.module('processoApp').factory('ProcessoService', [
         }
         
         function loadAllFinalizadores() {
-            $localStorage.finalizadores = "";
+            $localStorage.users = "";
             var deferred = $q.defer();
             $http.get(urls.FINALIZADOR_SERVICE_API).then(
                 function (response) {
                     console.log('Finalizadores carregados com sucesso', response.data);
-                    $localStorage.finalizadores = response.data;
+                    $localStorage.users = response.data;
                     deferred.resolve(response);
                 },
                 function (errResponse) {
@@ -55,7 +55,7 @@ angular.module('processoApp').factory('ProcessoService', [
         }
         
         function getAllFinalizadores() {
-            return $localStorage.finalizadores;
+            return $localStorage.users;
         }
 
         function getProcesso(id) {
@@ -63,7 +63,6 @@ angular.module('processoApp').factory('ProcessoService', [
             var deferred = $q.defer();
             $http.get(urls.PROCESSO_SERVICE_API + "/" + id).then(
                 function (response) {
-                    delete response.data.users;
                     console.log('Processo carregado com id :' + id);
                     console.log(response);
                     $localStorage.processo = response;
