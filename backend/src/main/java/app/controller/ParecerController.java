@@ -4,9 +4,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,8 +29,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api")
 public class ParecerController {
-
-	public static final Logger logger = LoggerFactory.getLogger(ParecerController.class);
 
 	@Autowired
 	ParecerService parecerService;
@@ -62,9 +57,7 @@ public class ParecerController {
 	public ResponseEntity<?> getParecer(@PathVariable("id") Long id) {
 		Parecer parecer = parecerService.findParecerById(id);
 		if (parecer == null) {
-			logger.error("Parecer com id {} não encontrada.", id);
-			return new ResponseEntity<Object>(new CustomErrorType("Parecer com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CustomErrorType("Parecer com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Parecer>(parecer, HttpStatus.OK);
 	}

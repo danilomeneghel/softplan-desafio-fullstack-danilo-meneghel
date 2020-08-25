@@ -4,9 +4,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,11 +30,9 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api")
 public class ProcessoController {
 
-	public static final Logger logger = LoggerFactory.getLogger(ProcessoController.class);
-
 	@Autowired
 	ProcessoService processoService;
-		
+	
 	@Autowired
 	UserService userService;
 
@@ -62,9 +57,7 @@ public class ProcessoController {
 	public ResponseEntity<?> getProcesso(@PathVariable("id") Long id) {
 		Processo processo = processoService.findProcessoById(id);
 		if (processo == null) {
-			logger.error("Processo com id {} não encontrada.", id);
-			return new ResponseEntity<Object>(new CustomErrorType("Processo com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CustomErrorType("Processo com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
@@ -73,9 +66,7 @@ public class ProcessoController {
 	@RequestMapping(value = "/processo", method = RequestMethod.POST)
 	public ResponseEntity<?> createProcesso(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
 		if (processoService.isProcessoExist(processo)) {
-			logger.error("Não é possível criar. Processo com titulo {} já existe", processo.getTitulo());
-			return new ResponseEntity<Object>(new CustomErrorType("Não é possível criar. Processo com titulo " + processo.getTitulo() + " já existe."),
-					HttpStatus.CONFLICT);
+			return new ResponseEntity<Object>(new CustomErrorType("Processo com titulo " + processo.getTitulo() + " já existe."), HttpStatus.CONFLICT);
 		}
 		
 		//Pega o Usuário logado
@@ -91,10 +82,7 @@ public class ProcessoController {
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateProcesso(@PathVariable("id") Long id, @RequestBody Processo processo) {
 		if (processoService.findProcessoById(id) == null) {
-			logger.error("Não é possível atualizar. Processo com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível atualizar. Processo com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CustomErrorType("Processo com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 		
 		//Pega o Usuário logado
@@ -110,10 +98,7 @@ public class ProcessoController {
 	@RequestMapping(value = "/processo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteProcesso(@PathVariable("id") Long id) {
 		if (processoService.findProcessoById(id) == null) {
-			logger.error("Não é possível excluir. Processo com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível excluir. Processo com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CustomErrorType("Processo com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 		processoService.deleteProcessoById(id);
 		return new ResponseEntity<Processo>(HttpStatus.NO_CONTENT);

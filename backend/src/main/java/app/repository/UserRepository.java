@@ -14,5 +14,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
     List<User> findAllByOrderByNameAsc();
     List<User> findAllByRoleOrderByNameAsc(String role);
-
+    Boolean existsByUsername(String username);
 }

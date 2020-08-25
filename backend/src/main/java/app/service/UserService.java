@@ -48,6 +48,9 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public void save(User user) {
+		//Criptografa a senha
+		encryptPassword(user);
+
 		repository.save(user);
 	}
 

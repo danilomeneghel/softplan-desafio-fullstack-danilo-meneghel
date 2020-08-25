@@ -4,9 +4,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,8 +31,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api")
 public class ProcessoParecerController {
-
-	public static final Logger logger = LoggerFactory.getLogger(ProcessoParecerController.class);
 
 	@Autowired
 	ProcessoService processoService;
@@ -85,10 +80,7 @@ public class ProcessoParecerController {
 	public ResponseEntity<?> updateParecer(@PathVariable("id") Long id, @RequestBody Parecer parecer) {
 		Parecer p = parecerService.findParecerById(id);
 		if (p == null) {
-			logger.error("Não é possível atualizar. Parecer com id {} não encontrado.", id);
-			return new ResponseEntity<Object>(
-					new CustomErrorType("Não é possível atualizar. Parecer com id " + id + " não encontrado."),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new CustomErrorType("Parecer com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
 
 		p.setComentario(parecer.getComentario());

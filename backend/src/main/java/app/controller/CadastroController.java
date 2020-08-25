@@ -35,39 +35,29 @@ public class CadastroController {
 
     @RequestMapping(value = "salvarCadastro", method = RequestMethod.POST)
     public String salvarCadastro(@Valid @ModelAttribute("cadastro") User user, BindingResult bindingResult, RedirectAttributes redirAttrs, Model model) {
-        if (user != null) {
-	    	User currentUser = userService.findByUsername(user.getUsername());
-	        if (user.getId() == null) { // Verifica se é um cadastro novo ou não
-	            if (!bindingResult.hasErrors()) { // Valida formulário
-	                if (user.getPassword().equals(user.getPasswordCheck())) { // Verifica se as senhas são iguais		
-	                    if (currentUser == null) { // Verifica se já existe o usuário
-	                        // Criptografa a senha
-	                        userService.encryptPassword(user);
-	                        user.setRole("TRIAD");
-	                        user.setStatus("ATIVO");
-	                        userService.save(user);
-	                        redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
-	                        return "redirect:/login";
-	                    } else {
-	                        bindingResult.rejectValue("username", "error.userexists", "Usuário já existente");
-	                    }
-	                } else {
-	                    bindingResult.rejectValue("passwordCheck", "error.pwdmatch", "Senhas não são iguais");
-	                }
-	            }
-	        } else {
-	            if (!bindingResult.hasErrors()) { // Valida formulário
-	                // Criptografa a senha
-	                userService.encryptPassword(user);
-	                user.setRole(currentUser.getRole());
-	                user.setStatus(currentUser.getStatus());
-	                userService.save(user);
-	                model.addAttribute("message", "Usuário atualizado com sucesso!");
-	            }
-	            return "perfil";
-	        }
-        }
-        return "cadastro";
+		if (userService.isUserExist(user.getUsername())) {
+			bindingResult.rejectValue("username", "error.userexists", "Usuário já existente");
+		}
+
+		if (!bindingResult.hasErrors()) { // Valida formulário
+			User currentUser = userService.findByUsername(user.getUsername());
+			if (user.getId() == null) { // Verifica se é um cadastro novo ou não
+				if (user.getPassword().equals(user.getPasswordCheck())) { // Verifica se as senhas são iguais		
+					user.setRole("TRIAD");
+					user.setStatus("ATIVO");
+					userService.save(user);
+					redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
+					return "redirect:/login";
+				} else {
+					bindingResult.rejectValue("passwordCheck", "error.pwdmatch", "Senhas não são iguais");
+				}
+			} else {
+				userService.save(user);
+				model.addAttribute("message", "Usuário atualizado com sucesso!");
+				return "perfil";
+			}
+		}
+		return "cadastro";
     }
 
 }
