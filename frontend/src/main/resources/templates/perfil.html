@@ -12,7 +12,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-4">
-                        <form th:object="${cadastro}" th:action="@{/salvarCadastro}" action="#" method="post">
+                        <form th:object="${cadastro}" th:action="@{/salvarPerfil}" action="#" method="post">
                             <input type="hidden" th:field="*{id}" />
                             <div class="form-group">
                                 <input type="text" th:field="*{name}" th:errorclass="invalid-feedback-input" class="form-control" placeholder="Nome" />
@@ -23,7 +23,7 @@
                                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="invalid-feedback">E-mail Error</p>
                             </div>	
                             <div class="form-group">
-                                <input type="text" readonly="readonly" th:field="*{username}" th:errorclass="invalid-feedback-input" class="form-control" placeholder="Usu�rio" />
+                                <input type="text" readonly="readonly" th:field="*{username}" th:errorclass="invalid-feedback-input" class="form-control" placeholder="Usuário" />
                                 <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:errorclass="invalid-feedback">Username Error</p>
                             </div>	
                             <div class="form-group">
