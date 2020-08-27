@@ -1,19 +1,17 @@
 package app.controller;
 
-import java.sql.Date;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import app.ApplicationTests;
-import app.entity.Parecer;
 import app.controller.ParecerController;
-import app.service.ParecerService;
 
 public class ParecerControllerTest extends ApplicationTests {
 
@@ -21,9 +19,6 @@ public class ParecerControllerTest extends ApplicationTests {
 	
 	@Autowired
 	private ParecerController parecerController;
-
-	@Autowired
-	private ParecerService parecerService;
 	
 	@Before
 	public void setUp() {
@@ -31,43 +26,19 @@ public class ParecerControllerTest extends ApplicationTests {
 	}
 	
 	@Test
-	public void testPOSTParecer() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/parecer")
-				.param("comentario", "Parecer Teste 2")
-				.param("idprocesso", "1")
-				.param("iduser", "1")
-				.param("createdAt", "2020-08-04 23:25:10")
-				.param("updatedAt", "2020-08-04 23:35:22"));
+	public void testGETPareceres() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/parecer")
+					.contentType(MediaType.APPLICATION_JSON)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
-	//É necessário estar logado no sistema para carregar os dados
-	/*@Test
-	public void testGETPareceres() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/parecer"))
-			.andExpect(MockMvcResultMatchers.status().isOk());
-	}*/
-	
-	//Esse ficou livre para testar
 	@Test
 	public void testGETParecer() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/parecer/" + 1))
-			.andExpect(MockMvcResultMatchers.status().isOk());
-	}
-	
-	@Test
-	public void testPUTParecer() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/parecer")
-					.param("comentario", "Parecer Teste 3")
-					.param("idprocesso", "1")
-					.param("iduser", "1")
-					.param("createdAt", "2020-08-05 06:25:10")
-					.param("updatedAt", "2020-08-04 23:35:22"));
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/parecer/" + 1));
-	}
-	
-	@Test
-	public void testDELETEParecer() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/parecer/" + 1));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/parecer/{id}", "1")
+					.contentType(MediaType.APPLICATION_JSON)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 		
 }

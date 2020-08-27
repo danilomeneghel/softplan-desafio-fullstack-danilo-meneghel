@@ -39,15 +39,14 @@ public class ParecerController {
 	@ApiOperation(value = "Lista todos os Pareceres")
 	@RequestMapping(value = "/parecer", method = RequestMethod.GET)
 	public ResponseEntity<List<Parecer>> listAllPareceres() {
-		//Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
-
 		List<Parecer> pareceres = null;
-		if (userDTO != null) { 
-			if (userDTO.getRole().equals("ADMIN"))
+		
+		//Verifica o Usuário logado
+		if (userService.userLogged() != null) { 
+			if (userService.userLogged().getRole().equals("ADMIN"))
 				pareceres = parecerService.findAllByOrderByProcessoAsc();
 			else
-				pareceres = parecerService.findAllByUser(userDTO);
+				pareceres = parecerService.findAllByUser(userService.userLogged());
 		} 		
 		return new ResponseEntity<List<Parecer>>(pareceres, HttpStatus.OK);
 	}

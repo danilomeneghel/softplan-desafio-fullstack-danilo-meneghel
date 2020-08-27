@@ -39,15 +39,14 @@ public class ProcessoController {
 	@ApiOperation(value = "Lista todos os Processos")
 	@RequestMapping(value = "/processo", method = RequestMethod.GET)
 	public ResponseEntity<List<Processo>> listAllProcessos(Principal principal) {
-		//Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
-
 		List<Processo> processos = null;
-		if(userDTO != null) {
-			if (userDTO.getRole().equals("ADMIN")) 
+		
+		//Verifica o Usuário logado
+		if(userService.userLogged() != null) {
+			if (userService.userLogged().getRole().equals("ADMIN")) 
 				processos = processoService.findAllByOrderByTituloAsc();
 			else
-				processos = processoService.findAllByCriador(userDTO);
+				processos = processoService.findAllByCriador(userService.userLogged());
 		} 
 		return new ResponseEntity<List<Processo>>(processos, HttpStatus.OK);
 	}
@@ -69,11 +68,12 @@ public class ProcessoController {
 			return new ResponseEntity<Object>(new CustomErrorType("Processo com titulo " + processo.getTitulo() + " já existe."), HttpStatus.CONFLICT);
 		}
 		
-		//Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
-		//Seta o Usuário logado
-		processo.setCriador(userDTO);
-		
+		if(processo.getCriador() == null) {
+			//Pega o Usuário logado
+			UserDTO userDTO = userService.userLogged();
+			//Seta o Usuário logado
+			processo.setCriador(userDTO);
+		}
 		processoService.save(processo);		
 		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}

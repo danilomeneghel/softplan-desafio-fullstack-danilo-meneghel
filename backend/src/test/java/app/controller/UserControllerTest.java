@@ -1,19 +1,17 @@
 package app.controller;
 
-import java.sql.Date;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import app.ApplicationTests;
-import app.entity.User;
 import app.controller.UserController;
-import app.service.UserService;
 
 public class UserControllerTest extends ApplicationTests {
 
@@ -21,9 +19,6 @@ public class UserControllerTest extends ApplicationTests {
 	
 	@Autowired
 	private UserController userController;
-
-	@Autowired
-	private UserService userService;
 	
 	@Before
 	public void setUp() {
@@ -32,44 +27,42 @@ public class UserControllerTest extends ApplicationTests {
 	
 	@Test
 	public void testPOSTUser() throws Exception {
+		String data = "{\"name\": \"Luana\", \"email\": \"luana@luana.com\", \"username\": \"luana\", \"password\": \"l123456\", \"role\": \"FINAL\", \"status\": \"ATIVO\"}";
+		
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
-				.param("name", "Luana")
-				.param("email", "luana@luana.com")
-				.param("username", "luana")
-				.param("password", "l123456")
-				.param("role", "FINAL")
-				.param("status", "ATIVO")
-				.param("createdAt", "2020-08-04 01:55:54"));
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(data)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 	
-	/*@Test
+	@Test
 	public void testGETUsers() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/user"))
 			.andExpect(MockMvcResultMatchers.status().isOk());
-	}*/
+	}
 	
 	@Test
 	public void testGETUser() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/user/" + 1))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/user/{id}", "1"))
 			.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	@Test
 	public void testPUTUser() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
-					.param("name", "Cristiana")
-					.param("email", "cristiana@cristiana.com")
-					.param("username", "cristiana")
-					.param("password", "c123456")
-					.param("role", "TRIAD")
-					.param("status", "INATIVO")
-					.param("createdAt", "2020-08-05 03:55:54"));
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/" + 1));
+		String data = "{\"name\": \"Cristiana\", \"email\": \"cristiana@cristiana.com\", \"username\": \"cristiana\", \"password\": \"c123456\", \"role\": \"TRIAD\", \"status\": \"INATIVO\"}";
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/user/{id}", "1")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(data)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
-	/*@Test
+	@Test
 	public void testDELETEUser() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/" + 1));
-	}*/
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/{id}", "1"))
+					.andExpect(MockMvcResultMatchers.status().isNoContent());
+	}
 	
 }

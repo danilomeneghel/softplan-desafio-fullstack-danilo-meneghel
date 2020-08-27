@@ -60,18 +60,21 @@ public class ProcessoParecerController {
 	@ApiOperation(value = "Cria o Parecer")
 	@RequestMapping(value = "/processo-parecer", method = RequestMethod.POST)
 	public ResponseEntity<?> createParecer(@RequestBody Processo processo, UriComponentsBuilder ucBuilder) {
-		//Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
+		if(processo.getCriador() == null) {
+			//Pega o Usuário logado
+			UserDTO userDTO = userService.userLogged();
 
-		//Cria um novo Parecer
-        Parecer parecer = new Parecer();
-        parecer.setProcesso(processo);
-        parecer.setUser(userDTO);
-        for(Parecer p : processo.getPareceres()) {
-            parecer.setComentario(p.getComentario());
-        }
-        
-		parecerService.save(parecer);
+			//Cria um novo Parecer
+			Parecer parecer = new Parecer();
+			parecer.setProcesso(processo);
+			parecer.setUser(userDTO);
+			for(Parecer p : processo.getPareceres()) {
+				parecer.setComentario(p.getComentario());
+			}
+			parecerService.save(parecer);
+		} else {
+			processoService.save(processo);	
+		}
 		return new ResponseEntity<Processo>(processo, HttpStatus.CREATED);
 	}
 

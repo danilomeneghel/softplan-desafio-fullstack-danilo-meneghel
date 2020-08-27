@@ -1,19 +1,17 @@
 package app.controller;
 
-import java.sql.Date;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import app.ApplicationTests;
-import app.entity.Processo;
 import app.controller.ProcessoController;
-import app.service.ProcessoService;
 
 public class ProcessoControllerTest extends ApplicationTests {
 
@@ -22,9 +20,6 @@ public class ProcessoControllerTest extends ApplicationTests {
 	@Autowired
 	private ProcessoController processoController;
 
-	@Autowired
-	private ProcessoService processoService;
-	
 	@Before
 	public void setUp() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(processoController).build();
@@ -32,45 +27,42 @@ public class ProcessoControllerTest extends ApplicationTests {
 	
 	@Test
 	public void testPOSTProcesso() throws Exception {
+		String data = "{\"criador\": {\"id\": 2, \"name\": \"Bruna\", \"role\": \"TRIAD\", \"username\": \"bruna\"}, \"descricao\": \"Descrição Teste\", \"pareceres\": null, \"status\": \"ABERTO\", \"titulo\": \"Processo 001\", \"users\": null}";
+		
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
-				.param("titulo", "Processo Teste 2")
-				.param("descricao", "Descrição Teste.")
-				.param("idcriador", "1")
-				.param("status", "ABERTO")
-				.param("createdAt", "2020-08-04 23:25:10")
-				.param("updatedAt", "2020-08-04 23:35:22"));
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(data)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 	
-	//É necessário estar logado no sistema para carregar os dados
-	/*@Test
+	@Test
 	public void testGETProcessos() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/processo"))
-			.andExpect(MockMvcResultMatchers.status().isOk());
-	}*/
+					.andExpect(MockMvcResultMatchers.status().isOk());
+	}
 	
-	//Esse ficou livre para testar
 	@Test
 	public void testGETProcesso() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/processo/" + 1))
-			.andExpect(MockMvcResultMatchers.status().isOk());
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/api/processo/{id}", "1"))
+					.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	@Test
 	public void testPUTProcesso() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/processo")
-					.param("titulo", "Processo Teste 3")
-					.param("descricao", "Descrição Teste.")
-					.param("idcriador", "1")
-					.param("status", "INATIVO")
-					.param("createdAt", "2020-08-04 23:25:10")
-					.param("updatedAt", "2020-08-04 23:35:22"));
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/" + 1));
+		String data = "{\"criador\": {\"id\": 2, \"name\": \"Bruna\", \"role\": \"TRIAD\", \"username\": \"bruna\"}, \"descricao\": \"Descrição Teste\", \"pareceres\": null, \"status\": \"FECHADO\", \"titulo\": \"Processo 002\", \"users\": null}";
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/api/processo/{id}", "1")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(data)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
-	//É necessário excluir em cascata (parecer x processo)
-	/*@Test
+	@Test
 	public void testDELETEProcesso() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/processo/" + 1));
-	}*/
-		
+		this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/processo/{id}", "1"))
+					.andExpect(MockMvcResultMatchers.status().isNoContent());
+	}
+	
 }

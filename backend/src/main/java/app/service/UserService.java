@@ -6,6 +6,7 @@ import app.dto.UserDTO;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -94,14 +95,15 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public UserDTO userLogged() {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = userDetails.getUsername();
-		
-		User user = findByUsername(username);
-
-		//Cria um novo objeto com apenas os dados necessários do Usuário
-		UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getRole());
-
-		return userDTO;
+		//Pega o usuário logado
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		if(loggedInUser != null) {
+			String username = loggedInUser.getName();
+			User user = findByUsername(username);
+			//Cria um novo objeto com apenas os dados necessários do Usuário
+			return new UserDTO(user.getId(), user.getName(), user.getUsername(), user.getRole());
+		} else {
+			return null;
+		}
 	}
 }
