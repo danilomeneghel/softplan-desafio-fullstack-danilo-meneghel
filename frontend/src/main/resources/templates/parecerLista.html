@@ -30,8 +30,10 @@
                         <td>{{processo.status}}</td>
                         <td>{{processo.pareceres[0].updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td class="col-actions">
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-controller="ModalController" 
-                            ng-click="openModal(processo.id)" class="btn btn-primary"><i class="fa fa-edit"></i> Enviar Parecer</a>
+                            <div ng-if="processo.status == 'ABERTO'">
+                                <a sec:authorize="hasAnyAuthority('ADMIN', 'FINAL')" ng-controller="ModalController" 
+                                ng-click="openModal(processo.id)" class="btn btn-primary"><i class="fa fa-edit"></i> Enviar Parecer</a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

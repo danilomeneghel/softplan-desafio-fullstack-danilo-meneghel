@@ -35,26 +35,28 @@ public class CadastroController {
 
     @RequestMapping(value = "salvarCadastro", method = RequestMethod.POST)
     public String salvarCadastro(@Valid @ModelAttribute("cadastro") User user, BindingResult bindingResult, RedirectAttributes redirAttrs) {
-		if (!bindingResult.hasErrors()) { // Valida formulário
-			if (userService.isUserExist(user.getUsername())) { // Verifica se o nome de usuário já existe
-				bindingResult.rejectValue("username", "error.userexists", "Usuário já existente");
-			}
-			if (user.getPassword().equals(user.getPasswordCheck())) { // Verifica se as senhas são iguais		
-				user.setRole("TRIAD");
-				user.setStatus("ATIVO");
-				userService.save(user);
-				redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
-				return "redirect:/login";
-			} else {
-				bindingResult.rejectValue("passwordCheck", "error.pwdmatch", "Senhas não são iguais");
-			}
+		//Verifica se o nome de usuário já existe
+		if (userService.isUserExist(user.getUsername())) { 
+			bindingResult.rejectValue("username", "error.userexists", "Usuário já existente");
+		}
+
+		//Valida o formulário e verifica se as senhas são iguais
+		if (!bindingResult.hasErrors() && user.getPassword().equals(user.getPasswordCheck())) { 		
+			user.setRole("TRIAD");
+			user.setStatus("ATIVO");
+			userService.save(user);
+			redirAttrs.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
+			return "redirect:/login";
+		} else {
+			bindingResult.rejectValue("passwordCheck", "error.pwdmatch", "Senhas não são iguais");
 		}
 		return "cadastro";
 	}
 
 	@RequestMapping(value = "salvarPerfil", method = RequestMethod.POST)
     public String salvarPerfil(@Valid @ModelAttribute("cadastro") User user, BindingResult bindingResult, Model model) {
-		if (!bindingResult.hasErrors()) { // Valida formulário
+		//Valida o formulário
+		if (!bindingResult.hasErrors()) { 
 			User currentUser = userService.findByUsername(user.getUsername());
 			user.setRole(currentUser.getRole());
 			user.setStatus(currentUser.getStatus());
