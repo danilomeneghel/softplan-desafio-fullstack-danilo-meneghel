@@ -84,12 +84,12 @@ public class ProcessoController {
 		if (processoService.findProcessoById(id) == null) {
 			return new ResponseEntity<Object>(new CustomErrorType("Processo com id " + id + " não encontrado."), HttpStatus.NOT_FOUND);
 		}
-		
-		//Pega o Usuário logado
-		UserDTO userDTO = userService.userLogged();
-		//Seta o Usuário logado
-		processo.setCriador(userDTO);
-		
+		if(processo.getCriador() == null) {
+			//Pega o Usuário logado
+			UserDTO userDTO = userService.userLogged();
+			//Seta o Usuário logado
+			processo.setCriador(userDTO);
+		}
 		processoService.save(processo);
 		return new ResponseEntity<Processo>(processo, HttpStatus.OK);
 	}
