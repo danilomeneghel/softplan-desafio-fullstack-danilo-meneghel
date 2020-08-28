@@ -83,8 +83,8 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User curruser = findByUsername(username);
 
-		if(curruser == null){
-	        throw new UsernameNotFoundException("Usuário não autorizado.");
+		if(curruser == null || curruser.getStatus().equals("INATIVO")){
+	        throw new UsernameNotFoundException("Usuário não encontrado ou sem autorização");
 	    }
 		
 		UserDetails user = new org.springframework.security.core.userdetails.User(username, curruser.getPassword(),
