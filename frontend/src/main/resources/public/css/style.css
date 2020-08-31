@@ -94,6 +94,7 @@ textarea {
 }
 
 .add-button {
+    padding-top: 15px !important;
 	margin-left: 20px !important;
 	margin-bottom: -50px !important;
 }
@@ -371,7 +372,7 @@ fieldset {
 .search input {
     float: right !important;
     margin: 0px 15px 5px 15px;
-    max-width: 300px !important;
+    max-width: 290px !important;
 }
 
 .pagination-left {
@@ -422,5 +423,15 @@ fieldset {
     }
     .menu-item {
         float: none !important;
+    }
+    .add-button {
+        padding-top: 0px !important;
+        margin-left: 10px !important;
+        margin-bottom: -50px !important;
+    }
+    .search input {
+        float: right !important;
+        margin: 0px 10px 5px 10px !important;
+        max-width: 170px !important;
     }
 }

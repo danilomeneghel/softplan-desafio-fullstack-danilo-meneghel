@@ -99,6 +99,22 @@ http://sistema-processos.herokuapp.com/ <br>
     - Username: catia
     - Password: catia
 
+## Licença
+
+Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
+
+## Screenshots
+
+![Screenshots](screenshots/screenshot01.png)<br><br>
+![Screenshots](screenshots/screenshot02.png)<br><br>
+![Screenshots](screenshots/screenshot03.png)<br><br>
+![Screenshots](screenshots/screenshot04.png)<br><br>
+![Screenshots](screenshots/screenshot05.png)<br><br>
+![Screenshots](screenshots/screenshot06.png)<br><br>
+![Screenshots](screenshots/screenshot07.png)<br><br>
+![Screenshots](screenshots/screenshot08.png)<br><br>
+![Screenshots](screenshots/screenshot09.png)<br><br>
+
 ## Testes
 
 Para realizar os testes, crie o banco de dados com o nome "sistema-processos-test".
@@ -107,11 +123,7 @@ Após feito isso, execute o seguinte comando no terminal:
 ```
 $ mvn test
 ```
-
-## Licença
-
-Projeto licenciado sob <a href="LICENSE">The MIT License (MIT)</a>.<br>
-
+![Screenshots](screenshots/test.png)<br><br>
 
 
 Desenvolvido por<br>

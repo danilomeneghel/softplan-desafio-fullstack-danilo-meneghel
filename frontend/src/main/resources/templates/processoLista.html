@@ -1,10 +1,10 @@
 <div class="panel">
-	<div class="add-button" ng-controller="ModalController">
-		<a sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" data-ng-click="openModal()" class="btn btn-success">
-			<i class="fa fa-plus"></i> Processo
-        </a>
-    </div>
     <div class="panel panel-default">
+        <div class="add-button" ng-controller="ModalController">
+            <a sec:authorize="hasAnyAuthority('ADMIN', 'TRIAD')" data-ng-click="openModal()" class="btn btn-success">
+                <i class="fa fa-plus"></i> Processo
+            </a>
+        </div>
         <div class="panel-body">
             <div class="row">
                 <div class="search">
