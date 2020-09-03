@@ -124,15 +124,8 @@
 		</plugins>
 		<resources>
 			<resource>
-				<directory>${project.basedir}/src/main/resources</directory>
-				<filtering>false</filtering>
-			</resource>
-			<resource>
-				<directory>${project.basedir}/../frontend/src/main/resources</directory>
+				<directory>${project.basedir}/../frontend</directory>
 				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>${project.build.directory}/generated-resources</directory>
 			</resource>
 		</resources>
 	</build>
